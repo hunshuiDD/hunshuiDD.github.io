@@ -183,8 +183,8 @@
         <p style="margin: 14px 0 0; line-height: 1.75;">个人项目 · UE 5.8.3 · CC0 公开头模 · 个人重写版。</p>
         <ul style="margin: 12px 0 0; padding-left: 20px; line-height: 1.75;">
           <li>多光向 Cycles 可见性烘焙 35 次生成面部 SDF；局部去碎只清颈根碎块，鼻口保护区与耳内阴影改动为 0。</li>
-          <li>UE 5.8.3 材质层按主光方向读 SDF：六光向与三档分屏擦除对照，8 点 GPU 抽查相对源贴图最大归一化误差 7.4×10⁻⁶；9 组静态光向下自动选主光与材质回读逐组一致。</li>
-          <li>用 32 帧对照 4 倍超采样参考量化闪烁：基本几何硬边夹具（无 AA）上解析式抗锯齿降低 66%；CC0 头模移动相机的眼鼻嘴区域在 TSR 下仍升高 5.6%，未达标，如实保留。</li>
+          <li>UE 5.8.3 材质层按主光方向读 SDF：六光向与三档分屏擦除对照，8 点 GPU 抽查相对源贴图最大归一化 RGB 误差 7.4×10⁻⁶；9 组静态光向下自动选主光与材质回读逐组一致。</li>
+          <li>用 32 帧对照 4 倍边长超采样参考（4×4 下采样）量化闪烁：基本几何硬边夹具（无 AA）上解析式抗锯齿降低 66%；CC0 头模移动相机的眼鼻嘴区域在 TSR 下仍升高 5.6%，未达标，如实保留。</li>
         </ul>
         <a href="Work-SDF.dc.html" data-print="hide" style="display: inline-block; margin-top: 14px; padding-bottom: 4px; border-bottom: 1px solid #121310; font: 700 12px 'Geist Mono', monospace;">查看项目证据 <b style="margin-left: 10px; color: #f06432;">→</b></a>
       </article>

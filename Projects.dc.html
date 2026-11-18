@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>项目索引 · 林朗逸</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="assets/971bf237c04f6bc4aef64f932ddf3231.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,900&amp;family=Noto+Serif+SC:wght@600;900&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+html body [data-reveal]{opacity:1;transform:none;transition:none}
+.btn .arr,.case-link span,.cap-item .go,.proj-row .go{display:inline-block;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.btn:hover .arr{transform:translate(3px,-3px)}
+.case-figure .frame img,.thumb-strip .ph img{transition:transform .6s cubic-bezier(.12,.23,.5,1)}
+.case-figure:hover .frame img,.thumb-strip figure:hover .ph img{transform:scale(1.04)}
+.lly-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lly-hl{color:#b3afa4;transition:color .35s cubic-bezier(.44,0,.56,1)}
+.lly-hl.is-lit{color:var(--ink)}
+.lly-hl.is-lit[data-key="1"]{color:var(--clay-ink)}
+.lly-slot-fig{margin:0;display:flex;flex-direction:column;gap:10px}
+.lly-slot{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed #a9a59a;background:var(--paper-2);color:var(--ink-soft);text-align:center;padding:20px;box-sizing:border-box}
+.lly-slot b{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--clay-ink)}
+.lly-slot span{font-size:13.5px;line-height:1.7;max-width:34em}
+.lly-slot.tall{aspect-ratio:4/5}.lly-slot.wide{aspect-ratio:21/9}
+.lly-slot-fig figcaption{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted)}
+.lly-slot-fig figcaption .mono{font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.lly-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:22px}
+.lly-grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:22px}
+.lly-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:28px;border-top:1px solid var(--ink);padding-top:26px}
+.lly-kpis div{display:flex;flex-direction:column;gap:8px}
+.lly-kpis b{font-family:var(--mono);font-weight:600;font-size:clamp(28px,2.8vw,42px);letter-spacing:-0.02em;line-height:1.1}
+.lly-kpis span{font-size:13.5px;line-height:1.8;color:var(--ink-soft)}
+.dark-sec .lly-kpis{border-top-color:rgba(240,233,218,0.22)}
+.dark-sec .lly-kpis b{color:var(--cream-on-dark)}
+.dark-sec .lly-kpis span{color:rgba(240,233,218,0.68)}
+.lly-cando{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.lly-cando li{display:grid;grid-template-columns:56px minmax(0,1fr) minmax(0,1.6fr);gap:20px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:14.5px;line-height:1.8}
+.lly-cando li span{font-family:var(--mono);font-size:12.5px;color:var(--clay-ink)}
+.lly-cando li b{font-family:var(--serif);font-weight:900;font-size:18px}
+.lly-cando li em{font-style:normal;color:var(--ink-soft)}
+.lly-issue{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.lly-issue li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:14px 18px;background:var(--paper-2);font-size:14px;line-height:1.8}
+.lly-issue li span{font-family:var(--mono);font-size:12px;color:var(--clay-ink)}
+@media (max-width:760px){.lly-cando li{grid-template-columns:40px minmax(0,1fr)}.lly-cando li em{grid-column:2}.lly-issue li{grid-template-columns:1fr}}
+
+.lly-cursor{position:fixed;left:0;top:0;width:34px;height:34px;border:1.5px solid var(--clay-ink);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;transition:width .35s cubic-bezier(.34,1.56,.64,1),height .35s cubic-bezier(.34,1.56,.64,1),background-color .3s,opacity .3s;mix-blend-mode:multiply}
+.lly-cursor.is-big{width:76px;height:76px;background:rgba(193,95,60,.14)}
+.lly-progress{position:fixed;left:0;top:0;right:0;height:3px;background:var(--clay-ink);transform-origin:0 50%;transform:scaleX(0);z-index:9998;pointer-events:none}
+.btn,.case-link{transition:translate .35s cubic-bezier(.34,1.56,.64,1),background-color .2s,color .2s,gap .2s}
+.hero-visual img.main,.hero-tag{transition:translate .6s cubic-bezier(.12,.23,.5,1)}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100vh">
+<div class="lly-progress" aria-hidden="true"></div>
+<div class="lly-cursor" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="brand" href="Main.dc.html">
+    <span class="mark">作</span>
+    <span class="name">林朗逸<span>作品集 · PORTFOLIO</span></span>
+  </a>
+  <nav class="site-nav">
+    <a href="Projects.dc.html" aria-current="page">项目</a>
+    <a href="Main.dc.html#capability">能力</a>
+    <a href="Resume.dc.html">简历</a>
+    <a href="Main.dc.html#contact">联系</a>
+  </nav>
+  <span class="header-status"><i></i>27 届 · 正在找 TA 校招</span>
+  <button class="menu-btn" type="button" onClick="{{toggleMenu}}">菜单</button>
+</header>
+<nav class="mobile-nav">
+  <a href="Projects.dc.html">项目</a>
+  <a href="Main.dc.html#capability">能力</a>
+  <a href="Resume.dc.html">简历</a>
+  <a href="Main.dc.html#contact">联系</a>
+</nav>
+
+<section class="idx-intro">
+  <div class="wrap">
+    <h1 data-reveal>已发布项目</h1>
+    <p class="lede" data-reveal style="--rd:.08s">这个列表故意很短。<strong>只有证据链完整、可以公开验证的项目才会出现在这里</strong>——目前是一套 UE5 角色渲染系统、一条以确定性规则为核心的 DCC → UE5 工具链，以及公开头模上的面部 SDF 光照与角色时域稳定。鼠标悬停可以看到预览。</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="proj-list" id="proj-list">
+
+    <a class="proj-row" href="Case-CelShading.dc.html" data-preview="assets/92790af4e92c30676160936b2399cfa0.jpg" data-reveal>
+      <span class="no">01</span>
+      <div>
+        <h2>UE5 PBR × NPR 角色渲染系统</h2>
+        <div class="sub">渲染 · 运行时 · 调试工具　/　UE 5.7 → 5.8　/　个人项目，持续迭代</div>
+        <p class="desc">31 个材质函数组成的复用库、数据驱动运行时、光照仲裁、分部位自阴影策略、RDG 自定义 Pass 与调试视图。原生 1080P 实测 52.3 → 60.2 FPS，全过程留有截帧证据。另对照原作逆向还原一名角色的全套渲染。</p>
+      </div>
+      <span class="go">→</span>
+    </a>
+
+    <a class="proj-row" href="Case-DCC.dc.html" data-preview="assets/2223c9ea547822c17aeafbfe677ce8c6.png" data-reveal style="--rd:.08s">
+      <span class="no">02</span>
+      <div>
+        <h2>AI-DCC → UE5 美术资产流水线</h2>
+        <div class="sub">DCC · 工具 · 管线　/　开源　/　Blender → UE5</div>
+        <p class="desc">共享契约 + 确定性规则，把 Blender 预检导出、UE 5.8 原生规则库与资源审查（C++ 插件，已人工验收）、JSON/CSV 报告串成可追溯链路；离线回归 640 项，628 通过、12 跳过、0 失败。合成演示 9 / 9。</p>
+      </div>
+      <span class="go">→</span>
+    </a>
+
+    <a class="proj-row" href="Work-SDF.dc.html" data-preview="assets/599daeeb89d124ab0f9fee0dbdb8cc5d.webp" data-reveal style="--rd:.16s">
+      <span class="no">03</span>
+      <div>
+        <h2>个人面部 SDF 光照</h2>
+        <div class="sub">渲染 · Blender Cycles / UE 5.8.3　/　CC0 公开头模</div>
+        <p class="desc">先烘焙可见性，再做局部清理。鼻口保护区 97,116 个像素，三档清理改动均为 0。UE 六光向和三档分屏擦除可对照。</p>
+      </div>
+      <span class="go">→</span>
+    </a>
+
+
+    <a class="proj-row" href="Work-SDF.dc.html#temporal" data-preview="assets/98a83e8756c228a41081a52b0e4e462f.jpg" data-reveal="" style="--rd:.24s">
+      <span class="no">04</span>
+      <div>
+        <h2>角色时域稳定</h2>
+        <div class="sub">渲染 · 抗锯齿 · 描边　/　CC0 公开头模</div>
+        <p class="desc">同轨 32 帧对照。眼鼻嘴误差在关闭引擎 AA 时下降 10.53%，TSR 下上升 5.64%，组合仍未达标。三条描边路径均有真实视口证据。</p>
+      </div>
+      <span class="go">→</span>
+    </a>
+  </div>
+
+  <p class="idx-foot-note" data-reveal>
+    想看每个项目背后的完整推理（包括被推翻的方案和踩过的坑），点进案例页；想看规格化呈现，去<a href="Resume.dc.html" style="color:var(--clay-ink);">简历页</a>。
+  </p>
+
+  <section class="more-docs" data-reveal>
+    <h2>其余材料</h2>
+    <p class="md-note">下面这些不是「项目」，是同一批工作的另一种呈现方式——长文档、可下载文件，以及还没达到公开标准的草稿。</p>
+    <ul class="md-list">
+      <li>
+        <a href="assets/9bfb4dddf73168eef91494941b5e7905.pdf" download>作品集 PDF <span class="ext">下载 · 3.4 MB</span></a>
+        <span>A4 竖版，投递用的完整版本。</span>
+      </li>
+      <li>
+        <a href="Portfolio-Full.dc.html">作品集 · 网页完整版 <span class="ext">→</span></a>
+        <span>两个项目的全部章节连成一页，含边界与纠错记录。</span>
+      </li>
+      <li>
+        <a href="Project-Index.dc.html">项目索引（旧版） <span class="ext">→</span></a>
+        <span>含验证层级标注的原始索引页。</span>
+      </li>
+      <li>
+        <a href="Resume-Doc.dc.html">简历 · 技术美术版 <span class="ext">→</span></a>
+        <span>纯文档形态，便于复制与检索。</span>
+      </li>
+      <li>
+        <a href="Resume.dc.html#resume-versions">简历 · 版本切换 <span class="ext">→</span></a>
+        <span>在简历页切换至工具与流程视角。</span>
+      </li>
+      <li>
+        <a href="Perf-Draft.dc.html">性能优化 · 草稿 <span class="ext">→</span></a>
+        <span>未完成，公开是因为过程本身有参考价值。</span>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<div class="hover-preview" id="hover-preview" aria-hidden="true"><img src="assets/92790af4e92c30676160936b2399cfa0.jpg" alt=""></div>
+
+<footer class="footer">
+  <span>© 2026 <b>林朗逸</b></span>
+  <span>UE5 TECHNICAL ARTIST · 2357312074@qq.com</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2400}}'>
+class Component extends DCLogic {
+  toggleMenu() {
+    var nav = document.querySelector('.mobile-nav');
+    if (nav) nav.classList.toggle('open');
+  }
+  componentDidMount() {
+    var self = this;
+    this._cleanup = [];
+    this._t = setTimeout(function () { self._motion(); }, 30);
+  }
+  _motion() {
+    var self = this;
+    /* 不跟随系统“减少动态效果”：这是作品集的展示动效，由页面作者决定开启 */
+    var reduced = false;
+    var $ = function (q, r) { return Array.prototype.slice.call((r || document).querySelectorAll(q)); };
+    var docEl = document.scrollingElement || document.documentElement;
+    /* 页面是在自己内部滚动，还是整页铺开、由外层滚动（画布里两种都可能） */
+    var inner = docEl.scrollHeight > window.innerHeight + 40;
+    if (inner) document.documentElement.classList.add('lly-scroll');
+
+    /* ---- Zimon 弹簧：先模拟弹簧，烘焙成 linear() 缓动，再交给 element.animate ---- */
+    var spring = function (o) {
+      var k, c, m = 1;
+      if (o.duration != null) { var z = 1 - o.bounce, w = 2 * Math.PI / o.duration; k = w * w; c = 2 * z * Math.sqrt(k); }
+      else { k = o.stiffness; c = o.damping; }
+      var x = 0, v = 0, dt = 1 / 240, t = 0, pts = [0], i = 0;
+      while (t < 4) { var a = -k * (x - 1) - c * v; v += a * dt; x += v * dt; t += dt; i++; if (i % 4 === 0) pts.push(+x.toFixed(4)); if (Math.abs(1 - x) < 0.0005 && Math.abs(v) < 0.005) break; }
+      pts.push(1);
+      return { easing: 'linear(' + pts.join(',') + ')', duration: Math.round(t * 1000) };
+    };
+    var P = {
+      riseIn: { from: { opacity: 0, transform: 'translateY(64px)' }, s: { stiffness: 100, damping: 30 } },
+      blurIn: { from: { opacity: 0, transform: 'translateY(24px)', filter: 'blur(14px)' }, s: { stiffness: 100, damping: 30 } },
+      lift3d: { from: { opacity: 0, transform: 'perspective(1200px) translateY(40px) scale(.86) rotateX(8deg)' }, s: { stiffness: 220, damping: 30 } },
+      slideIn: { from: { opacity: 0, transform: 'translateX(150px)' }, s: { stiffness: 135, damping: 30 } },
+      spinPop: { from: { opacity: 0, transform: 'rotate(10deg) scale(.3)' }, s: { duration: 0.8, bounce: 0.4 } }
+    };
+    var to = function (from) { var r = {}; for (var p in from) r[p] = p === 'opacity' ? 1 : p === 'filter' ? 'blur(0px)' : 'none'; return r; };
+    var play = function (el, name, delay) {
+      var p = P[name], s = spring(p.s);
+      return el.animate([p.from, to(p.from)], { duration: s.duration, easing: s.easing, delay: (delay || 0) * 1000, fill: 'both' });
+    };
+    var presetOf = function (el) {
+      if (el.hasAttribute('data-anim')) return el.getAttribute('data-anim');
+      if (/^H[1-3]$/.test(el.tagName)) return 'blurIn';
+      if (el.tagName === 'FIGURE' || el.classList.contains('lly-slot-fig')) return 'lift3d';
+      if (el.classList.contains('story-item') || el.classList.contains('tl-item') || el.classList.contains('cap-item') || el.tagName === 'LI') return 'slideIn';
+      return 'riseIn';
+    };
+
+    /* 1. 入场：进入视口只播一次；同一批进入的元素按顺序交错 0.08s，最多 0.5s */
+    if (!reduced) {
+      var targets = $('[data-reveal]').filter(function (el) { return !el.closest('.hero'); });
+      targets.forEach(function (el) { var f = P[presetOf(el)].from; for (var k in f) el.style[k] = f[k]; });
+      var io = new IntersectionObserver(function (entries) {
+        var vis = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+        vis.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+        vis.forEach(function (el, i) {
+          io.unobserve(el);
+          var a = play(el, presetOf(el), Math.min(i * 0.08, 0.5));
+          a.onfinish = function () { el.style.opacity = ''; el.style.transform = ''; el.style.filter = ''; a.cancel(); };
+        });
+      }, { threshold: 0.01 });
+      targets.forEach(function (el) { io.observe(el); });
+      this._cleanup.push(function () { io.disconnect(); });
+
+      var hero = document.querySelector('.hero');
+      if (hero) {
+        $('.hero-kicker, .hero h1, .hero-lede, .hero-actions, .hero-meta', hero).forEach(function (el, i) { play(el, i === 1 ? 'blurIn' : 'riseIn', 0.15 + i * 0.1); });
+        $('.hero-tag', hero).forEach(function (el, i) { play(el, 'spinPop', 0.9 + i * 0.25); });
+        var hi = hero.querySelector('img.main');
+        if (hi) hi.animate([{ opacity: 0, filter: 'grayscale(1) blur(10px)', transform: 'scale(1.18)' }, { opacity: 1, filter: 'grayscale(0) blur(0px)', transform: 'scale(1.04)' }], { duration: 1800, easing: 'cubic-bezier(.12,.23,.5,1)', fill: 'backwards' });
+      }
+    }
+
+    /* 2. 数字计数 */
+    var counters = $('[data-count]');
+    if (!reduced && counters.length) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          cio.unobserve(e.target);
+          var el = e.target, end = parseFloat(el.getAttribute('data-count'));
+          var from = parseFloat(el.getAttribute('data-from') || '0'), dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+          var t0 = performance.now(), dur = 1800;
+          (function tick(now) {
+            var t = Math.min(1, (now - t0) / dur), k = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            el.textContent = (from + (end - from) * k).toFixed(dec);
+            if (t < 1) requestAnimationFrame(tick);
+          })(t0);
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(function (c) { c.textContent = parseFloat(c.getAttribute('data-from') || '0').toFixed(parseInt(c.getAttribute('data-dec') || '0', 10)); cio.observe(c); });
+      this._cleanup.push(function () { cio.disconnect(); });
+    }
+
+    /* 3. 逐字点亮 */
+    var groups = [];
+    $('.lly-hl').forEach(function (s) { var g = s.parentElement; if (groups.indexOf(g) < 0) groups.push(g); });
+    if (reduced) $('.lly-hl').forEach(function (s) { s.classList.add('is-lit'); });
+    else if (!inner) {
+      /* 外层滚动时拿不到本页的滚动位置：进入视口后按阅读速度逐字点亮 */
+      var hio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting || e.intersectionRatio < 0.5) return;
+          hio.unobserve(e.target);
+          $('.lly-hl', e.target).forEach(function (s, i) { setTimeout(function () { s.classList.add('is-lit'); }, 300 + i * 38); });
+        });
+      }, { threshold: [0, 0.5, 1] });
+      groups.forEach(function (g) { hio.observe(g); });
+      this._cleanup.push(function () { hio.disconnect(); });
+    }
+
+    /* 4. 首屏：下面的内容滑上来盖住它（固定 + 变暗 + 视差） */
+    var heroEl = document.querySelector('.hero');
+    var dim = document.querySelector('[data-hero-dim]');
+    var heroImg = heroEl ? heroEl.querySelector('img.main') : null;
+    var header = document.querySelector('.site-header');
+    var applyHero = function (p) {
+      if (dim) dim.style.opacity = (p * 0.6).toFixed(3);
+      if (heroImg) heroImg.style.transform = 'translateY(' + (p * 8).toFixed(2) + '%) scale(' + (1.04 + 0.08 * p).toFixed(4) + ')';
+    };
+    if (heroEl && !reduced && !inner) {
+      /* 外层滚动：用可见比例推算滚出了多少，把首屏往下推，模拟“钉住” */
+      var th = []; for (var i = 0; i <= 50; i++) th.push(i / 50);
+      var pio = new IntersectionObserver(function (es) {
+        var e = es[es.length - 1], h = e.boundingClientRect.height || 1;
+        var leavingTop = e.intersectionRect.height < h && Math.abs(e.intersectionRect.bottom - e.boundingClientRect.bottom) < 2;
+        var out = leavingTop ? (h - e.intersectionRect.height) : 0;
+        heroEl.style.transform = 'translateY(' + (out * 0.82).toFixed(1) + 'px)';
+        applyHero(Math.min(1, out / h));
+      }, { threshold: th });
+      pio.observe(heroEl);
+      this._cleanup.push(function () { pio.disconnect(); });
+    }
+
+    /* 6. 鼠标反馈：跟随光标的圆环、首屏视差、卡片倾斜、按钮磁吸；顶部滚动进度条 */
+    var bar = document.querySelector('.lly-progress');
+    var fine = !window.matchMedia || window.matchMedia('(pointer: fine)').matches;
+    if (fine) {
+      var cur = document.querySelector('.lly-cursor');
+      var mx = -200, my = -200, cx = -200, cy = -200, alive = true;
+      var onMove = function (e) { mx = e.clientX; my = e.clientY; if (cur) cur.style.opacity = '1'; };
+      var onOver = function (e) {
+        var t = e.target && e.target.closest ? e.target.closest('a, button, figure, .story-item, .cap-item, .proj-row, .lly-kpis > div') : null;
+        if (cur) cur.classList.toggle('is-big', !!t);
+      };
+      var onOut = function (e) { if (!e.relatedTarget && cur) cur.style.opacity = '0'; };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseover', onOver);
+      document.addEventListener('mouseout', onOut);
+      (function loop() {
+        if (!alive) return;
+        cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
+        if (cur) cur.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0) translate(-50%,-50%)';
+        requestAnimationFrame(loop);
+      })();
+      this._cleanup.push(function () { alive = false; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseover', onOver); document.removeEventListener('mouseout', onOut); });
+
+      var heroBox = document.querySelector('.hero-visual');
+      var heroPic = heroBox ? heroBox.querySelector('img.main') : null;
+      if (heroBox && heroPic) {
+        heroBox.addEventListener('mousemove', function (e) {
+          var r = heroBox.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          heroPic.style.translate = (dx * -28).toFixed(1) + 'px ' + (dy * -20).toFixed(1) + 'px';
+          $('.hero-tag', heroBox).forEach(function (t, i) { t.style.translate = (dx * (18 + i * 10)).toFixed(1) + 'px ' + (dy * (14 + i * 8)).toFixed(1) + 'px'; });
+        });
+        heroBox.addEventListener('mouseleave', function () { heroPic.style.translate = ''; $('.hero-tag', heroBox).forEach(function (t) { t.style.translate = ''; }); });
+      }
+
+      $('.case-figure, .lly-slot-fig, .story-item, .lly-kpis > div, .thumb-strip figure').forEach(function (el) {
+        el.style.transition = 'transform .5s cubic-bezier(.12,.23,.5,1)';
+        el.addEventListener('mousemove', function (e) {
+          var r = el.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transition = 'transform .12s linear';
+          el.style.transform = 'perspective(900px) rotateX(' + (dy * -7).toFixed(2) + 'deg) rotateY(' + (dx * 9).toFixed(2) + 'deg) translateZ(0)';
+        });
+        el.addEventListener('mouseleave', function () { el.style.transition = 'transform .6s cubic-bezier(.34,1.56,.64,1)'; el.style.transform = ''; });
+      });
+
+      $('.btn, .case-link').forEach(function (b) {
+        b.addEventListener('mousemove', function (e) {
+          var r = b.getBoundingClientRect();
+          b.style.translate = ((e.clientX - r.left - r.width / 2) * 0.25).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + 'px';
+        });
+        b.addEventListener('mouseleave', function () { b.style.translate = ''; });
+      });
+    }
+    var raf = 0;
+    var update = function () {
+      raf = 0;
+      if (bar) { var max = Math.max(1, docEl.scrollHeight - window.innerHeight); bar.style.transform = 'scaleX(' + Math.min(1, (window.scrollY || docEl.scrollTop || 0) / max).toFixed(4) + ')'; }
+      if (!inner) return;
+      var vh = window.innerHeight || 800;
+      if (heroEl && !reduced) {
+        var hh = header ? header.offsetHeight : 0;
+        heroEl.style.top = Math.min(hh, vh - heroEl.offsetHeight) + 'px';
+        applyHero(Math.max(0, Math.min(1, (window.scrollY || docEl.scrollTop || 0) / Math.max(1, heroEl.offsetHeight))));
+      }
+      if (!reduced) {
+        var line = vh * 0.62;
+        $('.lly-hl').forEach(function (s) { var lit = s.getBoundingClientRect().top < line; if (lit !== s.classList.contains('is-lit')) s.classList.toggle('is-lit', lit); });
+      }
+    };
+    var onScroll = function () { if (!raf) raf = requestAnimationFrame(update); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    this._cleanup.push(function () { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); if (raf) cancelAnimationFrame(raf); });
+    update();
+
+    /* 5. 项目列表悬停预览（原站功能） */
+    var list = document.getElementById('proj-list');
+    var preview = document.getElementById('hover-preview');
+    if (list && preview && window.matchMedia('(pointer: fine)').matches && !reduced) {
+      var pimg = preview.querySelector('img'), mx = 0, my = 0, pr = 0;
+      var place = function () { pr = 0; var w = preview.offsetWidth, h = preview.offsetHeight, x = mx + 28, y = my - h / 2; if (x + w > window.innerWidth - 16) x = mx - w - 28; y = Math.max(12, Math.min(window.innerHeight - h - 12, y)); preview.style.left = x + 'px'; preview.style.top = y + 'px'; };
+      list.querySelectorAll('.proj-row').forEach(function (row) {
+        row.addEventListener('mouseenter', function () { var src = row.getAttribute('data-preview'); if (src && pimg) pimg.setAttribute('src', src); preview.classList.add('on'); });
+        row.addEventListener('mouseleave', function () { preview.classList.remove('on'); });
+      });
+      list.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; if (!pr) pr = requestAnimationFrame(place); });
+    }
+  }
+  componentWillUnmount() {
+    clearTimeout(this._t);
+    (this._cleanup || []).forEach(function (f) { f(); });
+  }
+  renderVals() { return { toggleMenu: this.toggleMenu }; }
+}
+</script>
+</body>
+</html>

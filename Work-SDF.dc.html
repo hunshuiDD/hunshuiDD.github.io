@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>案例 · 个人面部 SDF 光照</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="assets/971bf237c04f6bc4aef64f932ddf3231.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&amp;family=Noto+Serif+SC:wght@400;600;900&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+html body [data-reveal]{opacity:1;transform:none;transition:none}
+.btn .arr,.case-link span,.cap-item .go,.proj-row .go{display:inline-block;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.btn:hover .arr{transform:translate(3px,-3px)}
+.case-figure .frame img,.thumb-strip .ph img{transition:transform .6s cubic-bezier(.12,.23,.5,1)}
+.case-figure:hover .frame img,.thumb-strip figure:hover .ph img{transform:scale(1.04)}
+.lly-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lly-hl{color:#b3afa4;transition:color .35s cubic-bezier(.44,0,.56,1)}
+.lly-hl.is-lit{color:var(--ink)}
+.lly-hl.is-lit[data-key="1"]{color:var(--clay-ink)}
+.lly-slot-fig{margin:0;display:flex;flex-direction:column;gap:10px}
+.lly-slot{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed #a9a59a;background:var(--paper-2);color:var(--ink-soft);text-align:center;padding:20px;box-sizing:border-box}
+.lly-slot b{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--clay-ink)}
+.lly-slot span{font-size:13.5px;line-height:1.7;max-width:34em}
+.lly-slot.tall{aspect-ratio:4/5}.lly-slot.wide{aspect-ratio:21/9}
+.lly-slot-fig figcaption{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted)}
+.lly-slot-fig figcaption .mono{font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.lly-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:22px}
+.lly-grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:22px}
+.lly-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:28px;border-top:1px solid var(--ink);padding-top:26px}
+.lly-kpis div{display:flex;flex-direction:column;gap:8px}
+.lly-kpis b{font-family:var(--mono);font-weight:600;font-size:clamp(28px,2.8vw,42px);letter-spacing:-0.02em;line-height:1.1}
+.lly-kpis span{font-size:13.5px;line-height:1.8;color:var(--ink-soft)}
+.dark-sec .lly-kpis{border-top-color:rgba(240,233,218,0.22)}
+.dark-sec .lly-kpis b{color:var(--cream-on-dark)}
+.dark-sec .lly-kpis span{color:rgba(240,233,218,0.68)}
+.lly-cando{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.lly-cando li{display:grid;grid-template-columns:56px minmax(0,1fr) minmax(0,1.6fr);gap:20px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:14.5px;line-height:1.8}
+.lly-cando li span{font-family:var(--mono);font-size:12.5px;color:var(--clay-ink)}
+.lly-cando li b{font-family:var(--serif);font-weight:900;font-size:18px}
+.lly-cando li em{font-style:normal;color:var(--ink-soft)}
+.lly-issue{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.lly-issue li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:14px 18px;background:var(--paper-2);font-size:14px;line-height:1.8}
+.lly-issue li span{font-family:var(--mono);font-size:12px;color:var(--clay-ink)}
+@media (max-width:760px){.lly-cando li{grid-template-columns:40px minmax(0,1fr)}.lly-cando li em{grid-column:2}.lly-issue li{grid-template-columns:1fr}}
+
+.lly-cursor{position:fixed;left:0;top:0;width:34px;height:34px;border:1.5px solid var(--clay-ink);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;transition:width .35s cubic-bezier(.34,1.56,.64,1),height .35s cubic-bezier(.34,1.56,.64,1),background-color .3s,opacity .3s;mix-blend-mode:multiply}
+.lly-cursor.is-big{width:76px;height:76px;background:rgba(193,95,60,.14)}
+.lly-progress{position:fixed;left:0;top:0;right:0;height:3px;background:var(--clay-ink);transform-origin:0 50%;transform:scaleX(0);z-index:9998;pointer-events:none}
+.btn,.case-link{transition:translate .35s cubic-bezier(.34,1.56,.64,1),background-color .2s,color .2s,gap .2s}
+.hero-visual img.main,.hero-tag{transition:translate .6s cubic-bezier(.12,.23,.5,1)}
+
+</style>
+<script>
+(function () {
+  var id = window.location.hash.slice(1);
+  if (!id) return;
+  var jump = function () {
+    var target = document.getElementById(id);
+    if (!target || !target.getClientRects().length || window.location.hash.slice(1) !== id) return;
+    var top = window.scrollY + target.getBoundingClientRect().top - 92;
+    window.scrollTo({ top: top, behavior: 'instant' });
+  };
+  requestAnimationFrame(function () {
+    jump();
+    document.fonts.ready.then(function () { requestAnimationFrame(jump); });
+  });
+  if (document.readyState !== 'complete') {
+    window.addEventListener('load', function () { requestAnimationFrame(jump); }, { once: true });
+  }
+})();
+</script>
+</helmet>
+<div style="width: 100%; min-height: 100vh">
+<div class="lly-progress" aria-hidden="true"></div>
+<div class="lly-cursor" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="brand" href="Main.dc.html">
+    <span class="mark">作</span>
+    <span class="name">林朗逸<span>作品集 · PORTFOLIO</span></span>
+  </a>
+  <nav class="site-nav">
+    <a href="Projects.dc.html" aria-current="page">项目</a>
+    <a href="Main.dc.html#capability">能力</a>
+    <a href="Resume.dc.html">简历</a>
+    <a href="Main.dc.html#contact">联系</a>
+  </nav>
+  <span class="header-status"><i></i>27 届 · 正在找 TA 校招</span>
+  <button class="menu-btn" type="button" onClick="{{toggleMenu}}">菜单</button>
+</header>
+<nav class="mobile-nav">
+  <a href="Projects.dc.html">项目</a>
+  <a href="Main.dc.html#capability">能力</a>
+  <a href="Resume.dc.html">简历</a>
+  <a href="Main.dc.html#contact">联系</a>
+</nav>
+
+<section class="intro" style="padding-bottom: clamp(48px, 7vh, 80px)">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 28px">
+    <span class="side-label" data-reveal>CASE · 个人渲染项目</span>
+    <h1 data-reveal style="margin: 0; font-family: var(--serif); font-weight: 900; font-size: clamp(36px, 5vw, 68px); line-height: 1.15">个人面部 SDF<br>光照</h1>
+    <p class="big" style="margin: 0; max-width: 46em; font-family: var(--serif); font-size: clamp(19px, 1.7vw, 24px); line-height: 1.8"><span class="lly-sr">用一张可追溯的面部 SDF 控制明暗交界。先烘焙公开头模的可见性，再做局部清理，最后在 UE 里对光向和像素逐项复验。</span><sc-for list="{{pitch}}" as="c" hint-placeholder-count="40"><span aria-hidden="true" class="lly-hl" data-key="{{c.key}}">{{c.ch}}</span></sc-for></p>
+    <div class="case-facts" data-reveal style="max-width: 760px">
+      <div class="row"><span>角色</span><span>独立完成烘焙、材质接入与实测</span></div>
+      <div class="row"><span>引擎</span><span>Unreal Engine 5.8.3 · DX12 / SM6</span></div>
+      <div class="row"><span>技术栈</span><span>Blender Cycles · CC0 公开头模 GEO-head_stylized · UE 材质 / UMG</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="work" style="padding-top: clamp(64px, 9vh, 112px)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal="">01 · 烘焙与局部清理</span>
+        <h2 data-reveal="">清理耳内和颈根，<br>先保住鼻口。</h2>
+      </div>
+    </div>
+    <ul class="lly-cando" style="margin-bottom: 48px">
+      <li data-reveal=""><span>01</span><b>从真实可见性出发</b><em>用 Blender Human Base Meshes 的 CC0 头模做 Cycles 多光向可见性烘焙，共 35 次。</em></li>
+      <li data-reveal=""><span>02</span><b>局部选择清理强度</b><em>耳内保留原始，颈根用强清理。三档清理对鼻口保护区 97,116 个像素的改动均为 0。</em></li>
+      <li data-reveal=""><span>03</span><b>保留可核对的编码</b><em>输出 RGBA16 project 格式。G 存 θ/180，R 是 G 的 U 向镜像。</em></li>
+    </ul>
+    <div class="lly-grid2">
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><img src="assets/f1f1c0cd67b7e6f0807a5f698692174d.png" width="1536" height="1420" alt="Cycles 可见性烘焙 · 三档清理" style="display: block; width: 100%; height: auto;"></div>
+        <figcaption>Cycles 可见性烘焙 · 三档清理</figcaption>
+      </figure>
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><img src="assets/eff8667f101f6966192dd56573e9278a.png" width="1130" height="583" alt="局部差异 · 耳内与颈根" style="display: block; width: 100%; height: auto;"></div>
+        <figcaption>局部差异 · 耳内与颈根</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="cap">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal="">02 · UE 光照与对照</span>
+        <h2 data-reveal="">换光向，<br>也能逐项对照。</h2>
+      </div>
+    </div>
+    <ul class="lly-cando">
+      <li data-reveal=""><span>01</span><b>六光向复验</b><em>UE 5.8.3 DX12 / SM6 实拍六个光向。UMG 分屏擦除控件用同一视图对照三档清理。</em></li>
+      <li data-reveal=""><span>02</span><b>GPU 回读与源图一致</b><em>8 个 GPU 样点相对源 PNG 的最大归一化 RGB 误差为 0.0000073911。</em></li>
+      <li data-reveal=""><span>03</span><b>主光选择 F-3</b><em>双灯自动化执行 9 次。方向与选灯输出逐项一致。</em></li>
+    </ul>
+    <div style="display: flex; flex-direction: column; gap: 40px; margin-top: 48px">
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><video src="assets/8504dcca3d1f9dddc29136c0a118e024.mp4" width="1280" height="720" aria-label="40 秒光照审片 · CC0 公开头模" controls="" playsinline="" preload="metadata" style="display: block; width: 100%; height: auto;"></video></div>
+        <figcaption>40 秒光照审片 · CC0 公开头模</figcaption>
+      </figure>
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><img src="assets/cdd60eb2a7f25ce2ca2a7b0fbc764883.png" width="1024" height="1650" alt="UE 5.8.3 · 六个光向" style="display: block; width: 100%; height: auto;"></div>
+        <figcaption>UE 5.8.3 · 六个光向</figcaption>
+      </figure>
+<div class="lly-grid2">
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><img src="assets/e362c77177682b06611ea39786a737cc.png" width="1080" height="1100" alt="UE 同光向 · 原始与强清理对照" style="display: block; width: 100%; height: auto;"></div>
+        <figcaption>UE 同光向 · 原始与强清理对照</figcaption>
+      </figure>
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><img src="assets/3471555164499f16bdc276f05fffd979.png" width="1440" height="568" alt="光照矩阵工具 · 固定曝光，基本几何，12 / 12 张" style="display: block; width: 100%; height: auto;"></div>
+        <figcaption>光照矩阵工具 · 固定曝光，基本几何，12 / 12 张</figcaption>
+      </figure>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="work" id="temporal">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal="">03 · 角色时域稳定</span>
+        <h2 data-reveal="">关闭 AA 有改善，<br>TSR 组合仍未达标。</h2>
+      </div>
+    </div>
+    <ul class="lly-cando" style="margin-bottom: 48px">
+      <li data-reveal=""><span>01</span><b>同轨看眼、鼻、嘴</b><em>CC0 头模同轨运动 32 帧，对比 4 倍边长参考。解析式步进宽度在关闭引擎 AA 时误差下降 10.53%，TSR 下上升 5.64%。</em></li>
+      <li data-reveal=""><span>02</span><b>硬边夹具也测一遍</b><em>关闭引擎 AA，误差从 0.019750 降到 0.006695（−66.10%）。</em></li>
+      <li data-reveal=""><span>03</span><b>三条描边路径实拍</b><em>反面壳、TSR 前模板、TSR 后模板各采 32 帧真实视口。动态参数切换的整帧 GPU 差异未越过 2% 判定线。</em></li>
+    </ul>
+    <div style="display: flex; flex-direction: column; gap: 40px">
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><video src="assets/7c57c5ac82d97e40725995f12093be16.mp4" width="1280" height="640" aria-label="40 秒时域审片 · CC0 公开头模" controls="" playsinline="" preload="metadata" style="display: block; width: 100%; height: auto;"></video></div>
+        <figcaption>40 秒时域审片 · CC0 公开头模</figcaption>
+      </figure>
+<div class="lly-grid2">
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><img src="assets/9aea670150d9718870254e41451f12fe.png" width="384" height="384" alt="眼、鼻、嘴 · 指标取样区域" style="display: block; width: 100%; height: auto;"></div>
+        <figcaption>眼、鼻、嘴 · 指标取样区域</figcaption>
+      </figure>
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><img src="assets/98a83e8756c228a41081a52b0e4e462f.jpg" width="1152" height="848" alt="真实视口 · 三种描边实帧对照" style="display: block; width: 100%; height: auto;"></div>
+        <figcaption>真实视口 · 三种描边实帧对照</figcaption>
+      </figure>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="cap">
+  <div class="wrap">
+    <div style="display: flex; flex-wrap: wrap; gap: 14px" data-reveal="">
+      <a class="btn btn-primary" href="Main.dc.html#case-sdf">回到首页 <span class="arr">→</span></a>
+      <a class="btn btn-ghost" href="Projects.dc.html">看其他项目 <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2026 <b>林朗逸</b></span>
+  <span>UE5 TECHNICAL ARTIST · 烘焙、接入与实测由本人完成</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":7400}}'>
+class Component extends DCLogic {
+  toggleMenu() {
+    var nav = document.querySelector('.mobile-nav');
+    if (nav) nav.classList.toggle('open');
+  }
+  componentDidMount() {
+    var self = this;
+    this._cleanup = [];
+    this._t = setTimeout(function () { self._motion(); }, 30);
+  }
+  _motion() {
+    var self = this;
+    /* 不跟随系统“减少动态效果”：这是作品集的展示动效，由页面作者决定开启 */
+    var reduced = false;
+    var $ = function (q, r) { return Array.prototype.slice.call((r || document).querySelectorAll(q)); };
+    var docEl = document.scrollingElement || document.documentElement;
+    /* 页面是在自己内部滚动，还是整页铺开、由外层滚动（画布里两种都可能） */
+    var inner = docEl.scrollHeight > window.innerHeight + 40;
+    if (inner) document.documentElement.classList.add('lly-scroll');
+
+    /* ---- Zimon 弹簧：先模拟弹簧，烘焙成 linear() 缓动，再交给 element.animate ---- */
+    var spring = function (o) {
+      var k, c, m = 1;
+      if (o.duration != null) { var z = 1 - o.bounce, w = 2 * Math.PI / o.duration; k = w * w; c = 2 * z * Math.sqrt(k); }
+      else { k = o.stiffness; c = o.damping; }
+      var x = 0, v = 0, dt = 1 / 240, t = 0, pts = [0], i = 0;
+      while (t < 4) { var a = -k * (x - 1) - c * v; v += a * dt; x += v * dt; t += dt; i++; if (i % 4 === 0) pts.push(+x.toFixed(4)); if (Math.abs(1 - x) < 0.0005 && Math.abs(v) < 0.005) break; }
+      pts.push(1);
+      return { easing: 'linear(' + pts.join(',') + ')', duration: Math.round(t * 1000) };
+    };
+    var P = {
+      riseIn: { from: { opacity: 0, transform: 'translateY(64px)' }, s: { stiffness: 100, damping: 30 } },
+      blurIn: { from: { opacity: 0, transform: 'translateY(24px)', filter: 'blur(14px)' }, s: { stiffness: 100, damping: 30 } },
+      lift3d: { from: { opacity: 0, transform: 'perspective(1200px) translateY(40px) scale(.86) rotateX(8deg)' }, s: { stiffness: 220, damping: 30 } },
+      slideIn: { from: { opacity: 0, transform: 'translateX(150px)' }, s: { stiffness: 135, damping: 30 } },
+      spinPop: { from: { opacity: 0, transform: 'rotate(10deg) scale(.3)' }, s: { duration: 0.8, bounce: 0.4 } }
+    };
+    var to = function (from) { var r = {}; for (var p in from) r[p] = p === 'opacity' ? 1 : p === 'filter' ? 'blur(0px)' : 'none'; return r; };
+    var play = function (el, name, delay) {
+      var p = P[name], s = spring(p.s);
+      return el.animate([p.from, to(p.from)], { duration: s.duration, easing: s.easing, delay: (delay || 0) * 1000, fill: 'both' });
+    };
+    var presetOf = function (el) {
+      if (el.hasAttribute('data-anim')) return el.getAttribute('data-anim');
+      if (/^H[1-3]$/.test(el.tagName)) return 'blurIn';
+      if (el.tagName === 'FIGURE' || el.classList.contains('lly-slot-fig')) return 'lift3d';
+      if (el.classList.contains('story-item') || el.classList.contains('tl-item') || el.classList.contains('cap-item') || el.tagName === 'LI') return 'slideIn';
+      return 'riseIn';
+    };
+
+    /* 1. 入场：进入视口只播一次；同一批进入的元素按顺序交错 0.08s，最多 0.5s */
+    if (!reduced) {
+      var targets = $('[data-reveal]').filter(function (el) { return !el.closest('.hero'); });
+      targets.forEach(function (el) { var f = P[presetOf(el)].from; for (var k in f) el.style[k] = f[k]; });
+      var io = new IntersectionObserver(function (entries) {
+        var vis = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+        vis.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+        vis.forEach(function (el, i) {
+          io.unobserve(el);
+          var a = play(el, presetOf(el), Math.min(i * 0.08, 0.5));
+          a.onfinish = function () { el.style.opacity = ''; el.style.transform = ''; el.style.filter = ''; a.cancel(); };
+        });
+      }, { threshold: 0.01 });
+      targets.forEach(function (el) { io.observe(el); });
+      this._cleanup.push(function () { io.disconnect(); });
+
+      var hero = document.querySelector('.hero');
+      if (hero) {
+        $('.hero-kicker, .hero h1, .hero-lede, .hero-actions, .hero-meta', hero).forEach(function (el, i) { play(el, i === 1 ? 'blurIn' : 'riseIn', 0.15 + i * 0.1); });
+        $('.hero-tag', hero).forEach(function (el, i) { play(el, 'spinPop', 0.9 + i * 0.25); });
+        var hi = hero.querySelector('img.main');
+        if (hi) hi.animate([{ opacity: 0, filter: 'grayscale(1) blur(10px)', transform: 'scale(1.18)' }, { opacity: 1, filter: 'grayscale(0) blur(0px)', transform: 'scale(1.04)' }], { duration: 1800, easing: 'cubic-bezier(.12,.23,.5,1)', fill: 'backwards' });
+      }
+    }
+
+    /* 2. 数字计数 */
+    var counters = $('[data-count]');
+    if (!reduced && counters.length) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          cio.unobserve(e.target);
+          var el = e.target, end = parseFloat(el.getAttribute('data-count'));
+          var from = parseFloat(el.getAttribute('data-from') || '0'), dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+          var t0 = performance.now(), dur = 1800;
+          (function tick(now) {
+            var t = Math.min(1, (now - t0) / dur), k = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            el.textContent = (from + (end - from) * k).toFixed(dec);
+            if (t < 1) requestAnimationFrame(tick);
+          })(t0);
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(function (c) { c.textContent = parseFloat(c.getAttribute('data-from') || '0').toFixed(parseInt(c.getAttribute('data-dec') || '0', 10)); cio.observe(c); });
+      this._cleanup.push(function () { cio.disconnect(); });
+    }
+
+    /* 3. 逐字点亮 */
+    var groups = [];
+    $('.lly-hl').forEach(function (s) { var g = s.parentElement; if (groups.indexOf(g) < 0) groups.push(g); });
+    if (reduced) $('.lly-hl').forEach(function (s) { s.classList.add('is-lit'); });
+    else if (!inner) {
+      /* 外层滚动时拿不到本页的滚动位置：进入视口后按阅读速度逐字点亮 */
+      var hio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting || e.intersectionRatio < 0.5) return;
+          hio.unobserve(e.target);
+          $('.lly-hl', e.target).forEach(function (s, i) { setTimeout(function () { s.classList.add('is-lit'); }, 300 + i * 38); });
+        });
+      }, { threshold: [0, 0.5, 1] });
+      groups.forEach(function (g) { hio.observe(g); });
+      this._cleanup.push(function () { hio.disconnect(); });
+    }
+
+    /* 4. 首屏：下面的内容滑上来盖住它（固定 + 变暗 + 视差） */
+    var heroEl = document.querySelector('.hero');
+    var dim = document.querySelector('[data-hero-dim]');
+    var heroImg = heroEl ? heroEl.querySelector('img.main') : null;
+    var header = document.querySelector('.site-header');
+    var applyHero = function (p) {
+      if (dim) dim.style.opacity = (p * 0.6).toFixed(3);
+      if (heroImg) heroImg.style.transform = 'translateY(' + (p * 8).toFixed(2) + '%) scale(' + (1.04 + 0.08 * p).toFixed(4) + ')';
+    };
+    if (heroEl && !reduced && !inner) {
+      /* 外层滚动：用可见比例推算滚出了多少，把首屏往下推，模拟“钉住” */
+      var th = []; for (var i = 0; i <= 50; i++) th.push(i / 50);
+      var pio = new IntersectionObserver(function (es) {
+        var e = es[es.length - 1], h = e.boundingClientRect.height || 1;
+        var leavingTop = e.intersectionRect.height < h && Math.abs(e.intersectionRect.bottom - e.boundingClientRect.bottom) < 2;
+        var out = leavingTop ? (h - e.intersectionRect.height) : 0;
+        heroEl.style.transform = 'translateY(' + (out * 0.82).toFixed(1) + 'px)';
+        applyHero(Math.min(1, out / h));
+      }, { threshold: th });
+      pio.observe(heroEl);
+      this._cleanup.push(function () { pio.disconnect(); });
+    }
+
+    /* 6. 鼠标反馈：跟随光标的圆环、首屏视差、卡片倾斜、按钮磁吸；顶部滚动进度条 */
+    var bar = document.querySelector('.lly-progress');
+    var fine = !window.matchMedia || window.matchMedia('(pointer: fine)').matches;
+    if (fine) {
+      var cur = document.querySelector('.lly-cursor');
+      var mx = -200, my = -200, cx = -200, cy = -200, alive = true;
+      var onMove = function (e) { mx = e.clientX; my = e.clientY; if (cur) cur.style.opacity = '1'; };
+      var onOver = function (e) {
+        var t = e.target && e.target.closest ? e.target.closest('a, button, figure, .story-item, .cap-item, .proj-row, .lly-kpis > div') : null;
+        if (cur) cur.classList.toggle('is-big', !!t);
+      };
+      var onOut = function (e) { if (!e.relatedTarget && cur) cur.style.opacity = '0'; };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseover', onOver);
+      document.addEventListener('mouseout', onOut);
+      (function loop() {
+        if (!alive) return;
+        cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
+        if (cur) cur.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0) translate(-50%,-50%)';
+        requestAnimationFrame(loop);
+      })();
+      this._cleanup.push(function () { alive = false; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseover', onOver); document.removeEventListener('mouseout', onOut); });
+
+      var heroBox = document.querySelector('.hero-visual');
+      var heroPic = heroBox ? heroBox.querySelector('img.main') : null;
+      if (heroBox && heroPic) {
+        heroBox.addEventListener('mousemove', function (e) {
+          var r = heroBox.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          heroPic.style.translate = (dx * -28).toFixed(1) + 'px ' + (dy * -20).toFixed(1) + 'px';
+          $('.hero-tag', heroBox).forEach(function (t, i) { t.style.translate = (dx * (18 + i * 10)).toFixed(1) + 'px ' + (dy * (14 + i * 8)).toFixed(1) + 'px'; });
+        });
+        heroBox.addEventListener('mouseleave', function () { heroPic.style.translate = ''; $('.hero-tag', heroBox).forEach(function (t) { t.style.translate = ''; }); });
+      }
+
+      $('.case-figure, .lly-slot-fig, .story-item, .lly-kpis > div, .thumb-strip figure').forEach(function (el) {
+        el.style.transition = 'transform .5s cubic-bezier(.12,.23,.5,1)';
+        el.addEventListener('mousemove', function (e) {
+          var r = el.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transition = 'transform .12s linear';
+          el.style.transform = 'perspective(900px) rotateX(' + (dy * -7).toFixed(2) + 'deg) rotateY(' + (dx * 9).toFixed(2) + 'deg) translateZ(0)';
+        });
+        el.addEventListener('mouseleave', function () { el.style.transition = 'transform .6s cubic-bezier(.34,1.56,.64,1)'; el.style.transform = ''; });
+      });
+
+      $('.btn, .case-link').forEach(function (b) {
+        b.addEventListener('mousemove', function (e) {
+          var r = b.getBoundingClientRect();
+          b.style.translate = ((e.clientX - r.left - r.width / 2) * 0.25).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + 'px';
+        });
+        b.addEventListener('mouseleave', function () { b.style.translate = ''; });
+      });
+    }
+    var raf = 0;
+    var update = function () {
+      raf = 0;
+      if (bar) { var max = Math.max(1, docEl.scrollHeight - window.innerHeight); bar.style.transform = 'scaleX(' + Math.min(1, (window.scrollY || docEl.scrollTop || 0) / max).toFixed(4) + ')'; }
+      if (!inner) return;
+      var vh = window.innerHeight || 800;
+      if (heroEl && !reduced) {
+        var hh = header ? header.offsetHeight : 0;
+        heroEl.style.top = Math.min(hh, vh - heroEl.offsetHeight) + 'px';
+        applyHero(Math.max(0, Math.min(1, (window.scrollY || docEl.scrollTop || 0) / Math.max(1, heroEl.offsetHeight))));
+      }
+      if (!reduced) {
+        var line = vh * 0.62;
+        $('.lly-hl').forEach(function (s) { var lit = s.getBoundingClientRect().top < line; if (lit !== s.classList.contains('is-lit')) s.classList.toggle('is-lit', lit); });
+      }
+    };
+    var onScroll = function () { if (!raf) raf = requestAnimationFrame(update); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    this._cleanup.push(function () { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); if (raf) cancelAnimationFrame(raf); });
+    update();
+
+    /* 5. 项目列表悬停预览（原站功能） */
+    var list = document.getElementById('proj-list');
+    var preview = document.getElementById('hover-preview');
+    if (list && preview && window.matchMedia('(pointer: fine)').matches && !reduced) {
+      var pimg = preview.querySelector('img'), mx = 0, my = 0, pr = 0;
+      var place = function () { pr = 0; var w = preview.offsetWidth, h = preview.offsetHeight, x = mx + 28, y = my - h / 2; if (x + w > window.innerWidth - 16) x = mx - w - 28; y = Math.max(12, Math.min(window.innerHeight - h - 12, y)); preview.style.left = x + 'px'; preview.style.top = y + 'px'; };
+      list.querySelectorAll('.proj-row').forEach(function (row) {
+        row.addEventListener('mouseenter', function () { var src = row.getAttribute('data-preview'); if (src && pimg) pimg.setAttribute('src', src); preview.classList.add('on'); });
+        row.addEventListener('mouseleave', function () { preview.classList.remove('on'); });
+      });
+      list.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; if (!pr) pr = requestAnimationFrame(place); });
+    }
+  }
+  componentWillUnmount() {
+    clearTimeout(this._t);
+    (this._cleanup || []).forEach(function (f) { f(); });
+  }
+  renderVals() {
+    var t = '用一张可追溯的面部 SDF 控制明暗交界。先烘焙公开头模的可见性，再做局部清理，最后在 UE 里对光向和像素逐项复验。';
+    var keys = ['面部 SDF', '可见性', '局部清理', '逐项复验'], m = [];
+    for (var i = 0; i < t.length; i++) m.push('0');
+    keys.forEach(function (k) { for (var s = t.indexOf(k); s > -1; s = t.indexOf(k, s + 1)) for (var j = s; j < s + k.length; j++) m[j] = '1'; });
+    return { toggleMenu: this.toggleMenu, pitch: t.split('').map(function (ch, i) { return { ch: ch, key: m[i] }; }) };
+  }
+}
+</script>
+</body>
+</html>

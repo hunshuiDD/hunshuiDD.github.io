@@ -1,0 +1,24 @@
+{
+  "pages": [
+    "Case-CelShading.dc.html",
+    "Case-DCC.dc.html",
+    "Main.dc.html",
+    "NotFound.dc.html",
+    "Perf-Draft.dc.html",
+    "Portfolio-Full.dc.html",
+    "Project-Index.dc.html",
+    "Projects.dc.html",
+    "Resume-Doc-TD.dc.html",
+    "Resume-Doc.dc.html",
+    "Resume.dc.html",
+    "Work-SDF.dc.html"
+  ],
+  "assets": 61,
+  "runtime": "current",
+  "runtime_source_sha256": "c4929939a4fa0ff409afd395a75cd87a7a7412d26bf4cf34d7292a94c05ea482",
+  "runtime_url_replacements": {
+    "https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js": "./vendor/react.production.min.js",
+    "https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js": "./vendor/react-dom.production.min.js",
+    "https://cdn.jsdelivr.net/npm/@babel/standalone@7.29.0/babel.min.js": "./vendor/babel.min.js"
+  }
+}

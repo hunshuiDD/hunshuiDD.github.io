@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>案例 · AI-DCC → UE5 美术资产流水线</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="assets/971bf237c04f6bc4aef64f932ddf3231.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&amp;family=Noto+Serif+SC:wght@400;600;900&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+html body [data-reveal]{opacity:1;transform:none;transition:none}
+.btn .arr,.case-link span,.cap-item .go,.proj-row .go{display:inline-block;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.btn:hover .arr{transform:translate(3px,-3px)}
+.case-figure .frame img,.thumb-strip .ph img{transition:transform .6s cubic-bezier(.12,.23,.5,1)}
+.case-figure:hover .frame img,.thumb-strip figure:hover .ph img{transform:scale(1.04)}
+.lly-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lly-hl{color:#b3afa4;transition:color .35s cubic-bezier(.44,0,.56,1)}
+.lly-hl.is-lit{color:var(--ink)}
+.lly-hl.is-lit[data-key="1"]{color:var(--clay-ink)}
+.lly-slot-fig{margin:0;display:flex;flex-direction:column;gap:10px}
+.lly-slot{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed #a9a59a;background:var(--paper-2);color:var(--ink-soft);text-align:center;padding:20px;box-sizing:border-box}
+.lly-slot b{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--clay-ink)}
+.lly-slot span{font-size:13.5px;line-height:1.7;max-width:34em}
+.lly-slot.tall{aspect-ratio:4/5}.lly-slot.wide{aspect-ratio:21/9}
+.lly-slot-fig figcaption{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted)}
+.lly-slot-fig figcaption .mono{font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.lly-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:22px}
+.lly-grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:22px}
+.lly-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:28px;border-top:1px solid var(--ink);padding-top:26px}
+.lly-kpis div{display:flex;flex-direction:column;gap:8px}
+.lly-kpis b{font-family:var(--mono);font-weight:600;font-size:clamp(28px,2.8vw,42px);letter-spacing:-0.02em;line-height:1.1}
+.lly-kpis span{font-size:13.5px;line-height:1.8;color:var(--ink-soft)}
+.dark-sec .lly-kpis{border-top-color:rgba(240,233,218,0.22)}
+.dark-sec .lly-kpis b{color:var(--cream-on-dark)}
+.dark-sec .lly-kpis span{color:rgba(240,233,218,0.68)}
+.lly-cando{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.lly-cando li{display:grid;grid-template-columns:56px minmax(0,1fr) minmax(0,1.6fr);gap:20px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:14.5px;line-height:1.8}
+.lly-cando li span{font-family:var(--mono);font-size:12.5px;color:var(--clay-ink)}
+.lly-cando li b{font-family:var(--serif);font-weight:900;font-size:18px}
+.lly-cando li em{font-style:normal;color:var(--ink-soft)}
+.lly-issue{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.lly-issue li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:14px 18px;background:var(--paper-2);font-size:14px;line-height:1.8}
+.lly-issue li span{font-family:var(--mono);font-size:12px;color:var(--clay-ink)}
+@media (max-width:760px){.lly-cando li{grid-template-columns:40px minmax(0,1fr)}.lly-cando li em{grid-column:2}.lly-issue li{grid-template-columns:1fr}}
+
+.lly-cursor{position:fixed;left:0;top:0;width:34px;height:34px;border:1.5px solid var(--clay-ink);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;transition:width .35s cubic-bezier(.34,1.56,.64,1),height .35s cubic-bezier(.34,1.56,.64,1),background-color .3s,opacity .3s;mix-blend-mode:multiply}
+.lly-cursor.is-big{width:76px;height:76px;background:rgba(193,95,60,.14)}
+.lly-progress{position:fixed;left:0;top:0;right:0;height:3px;background:var(--clay-ink);transform-origin:0 50%;transform:scaleX(0);z-index:9998;pointer-events:none}
+.btn,.case-link{transition:translate .35s cubic-bezier(.34,1.56,.64,1),background-color .2s,color .2s,gap .2s}
+.hero-visual img.main,.hero-tag{transition:translate .6s cubic-bezier(.12,.23,.5,1)}
+
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100vh">
+<div class="lly-progress" aria-hidden="true"></div>
+<div class="lly-cursor" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="brand" href="Main.dc.html">
+    <span class="mark">作</span>
+    <span class="name">林朗逸<span>作品集 · PORTFOLIO</span></span>
+  </a>
+  <nav class="site-nav">
+    <a href="Projects.dc.html" aria-current="page">项目</a>
+    <a href="Main.dc.html#capability">能力</a>
+    <a href="Resume.dc.html">简历</a>
+    <a href="Main.dc.html#contact">联系</a>
+  </nav>
+  <span class="header-status"><i></i>27 届 · 正在找 TA 校招</span>
+  <button class="menu-btn" type="button" onClick="{{toggleMenu}}">菜单</button>
+</header>
+<nav class="mobile-nav">
+  <a href="Projects.dc.html">项目</a>
+  <a href="Main.dc.html#capability">能力</a>
+  <a href="Resume.dc.html">简历</a>
+  <a href="Main.dc.html#contact">联系</a>
+</nav>
+
+<section class="intro" style="padding-bottom: clamp(48px, 7vh, 80px)">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 28px">
+    <span class="side-label" data-reveal>CASE · 个人工具项目 · 开源 · 2026.06 — 至今</span>
+    <h1 data-reveal style="margin: 0; font-family: var(--serif); font-weight: 900; font-size: clamp(36px, 5vw, 68px); line-height: 1.15">AI-DCC → UE5<br>美术资产流水线</h1>
+    <p class="big" style="margin: 0; max-width: 46em; font-family: var(--serif); font-size: clamp(19px, 1.7vw, 24px); line-height: 1.8"><span class="lly-sr">资产从 Blender 到 UE5 的路上，问题大多不是导不进去，而是导进去两周后才发现错了。这条流水线让每个问题在导出前、导入前就被拦下，并且每一步都留下证据。</span><sc-for list="{{pitch}}" as="c" hint-placeholder-count="40"><span aria-hidden="true" class="lly-hl" data-key="{{c.key}}">{{c.ch}}</span></sc-for></p>
+    <div class="case-top" style="margin: 0">
+      <div>
+        <div class="case-facts" data-reveal>
+          <div class="row"><span>职责</span><span>独立 Technical Artist / Technical Designer · Pipeline Tools</span></div>
+          <div class="row"><span>技术</span><span>Python · Blender Add-on · UE 5.8 C++ / Slate 编辑器插件 · UE Python · MCP · JSON Schema</span></div>
+          <div class="row"><span>AI 使用</span><span>Codex / Claude 辅助开发；DeepSeek API 解释校验报告（人工确认后执行）</span></div>
+          <div class="row"><span>仓库</span><span><a href="https://github.com/hunshuiDD/ai-dcc-ue5-pipeline" style="color: var(--clay-ink)">hunshuiDD/ai-dcc-ue5-pipeline ↗</a></span></div>
+        </div>
+      </div>
+      <figure class="case-figure" data-reveal style="margin: 0">
+        <div class="frame" style="background: #fff"><img src="assets/2223c9ea547822c17aeafbfe677ce8c6.png" alt="ai-dcc-ue5-pipeline 仓库预览" style="object-fit: contain"></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="work" style="padding-top: clamp(64px, 9vh, 112px)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal>01 · 解决什么问题</span>
+        <h2 data-reveal>问题发现得越晚，<br>返工越贵。</h2>
+      </div>
+    </div>
+    <ul class="lly-cando">
+      <li data-reveal><span>01</span><b>规范靠人记</b><em>命名前缀、单位缩放、材质槽、法线和 UV，每次导出都靠美术自己检查，漏一项就带着错进工程。</em></li>
+      <li data-reveal><span>02</span><b>错了很久才发现</b><em>资产进内容库两周后才在场景里暴露问题，这时已经被引用，改起来牵一发动全身。</em></li>
+      <li data-reveal><span>03</span><b>两端各说各话</b><em>Blender 导出时检查过什么、UE 导入时又该检查什么，没有共同的记录，出了问题追不到是哪一步。</em></li>
+      <li data-reveal><span>04</span><b>AI 直接改资产不可控</b><em>让 AI 自己写脚本修模型，改了什么、为什么改都说不清，也没法回退。</em></li>
+    </ul>
+  </div>
+</section>
+
+<section class="cap">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal>02 · 能做到什么</span>
+        <h2 data-reveal>两端共用一套规则，<br>每一步都留下证据。</h2>
+      </div>
+    </div>
+    <ul class="lly-cando">
+      <li data-reveal><span>01</span><b>导出前在 Blender 里判定</b><em>命名前缀、未应用缩放、未命名材质槽、UV 与法线当场报出，定位到具体对象；支持整体导出或按资产分组导出，单个资产失败不阻断其他资产。</em></li>
+      <li data-reveal><span>02</span><b>导出时同步落盘证据</b><em>FBX / OBJ / glTF-GLB / USD 与 metadata、validation report（JSON）、CSV 同名并列，UE 侧按同一命名去找。</em></li>
+      <li data-reveal><span>03</span><b>UE 原生规则库</b><em>自研 UE 5.8 C++ 编辑器插件：规则 / 规则组 / 规则集三棵树，12 种比较算子，组合规则沿“模型 → 材质 → 贴图”依赖链展开；保存时校验 id、目录和子规则，坏文件逐条报错不中断。</em></li>
+      <li data-reveal><span>04</span><b>资源审查</b><em>能力目录覆盖贴图（压缩、sRGB、Mip、源图尺寸…）、静态网格、骨骼网格（面数、UV、最大影响骨数、Morph…），任意类的可编辑属性走反射；按资产注册表匹配、只在需要时加载，大目录可取消。</em></li>
+      <li data-reveal><span>05</span><b>结果可定位、可豁免</b><em>结果表可筛选，双击定位到内容浏览器；豁免必须填写原因才能保存；报告导出 JSON / TXT，不覆盖旧报告。</em></li>
+      <li data-reveal><span>06</span><b>管线阶段有人把关</b><em>用 MCP 把管线阶段封装成工具：只读计划、按轮数授权写入、检查出错就阻止写入、改动后旧证据自动失效，自动检查通过后仍要人工签字。</em></li>
+    </ul>
+  </div>
+</section>
+
+<section class="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal>03 · 效果</span>
+        <h2 data-reveal>从 Blender 一路走到 UE5，<br>每一步都看得见。</h2>
+      </div>
+    </div>
+    <span class="side-label" data-reveal style="margin-bottom: 22px">BLENDER · 导出前</span>
+    <div class="lly-grid3" style="margin-bottom: 48px">
+      <figure class="lly-slot-fig" data-reveal><div class="lly-slot tall"><b>B1</b><span>Blender · Pipeline 面板</span></div></figure>
+      <figure class="lly-slot-fig" data-reveal><div class="lly-slot tall"><b>B2</b><span>Blender · Validate 结果</span></div></figure>
+    </div>
+    <span class="side-label" data-reveal style="margin-bottom: 22px">UE 5.8 · 原生规则面板</span>
+    <div style="display: flex; flex-direction: column; gap: 22px">
+      <figure class="lly-slot-fig" data-reveal><div class="lly-slot wide"><b>U1</b><span>UE · 规则库 + 能力目录</span></div></figure>
+      <div class="lly-grid2">
+        <figure class="lly-slot-fig" data-reveal><div class="lly-slot"><b>U2</b><span>UE · 资源审查结果表</span></div></figure>
+        <figure class="lly-slot-fig" data-reveal><div class="lly-slot"><b>U3</b><span>UE · 模型 → 材质 → 贴图组合规则</span></div></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal="">验证 · CLI 与 FBX</span>
+        <h2 data-reveal="">管线能拦错，<br>几何回读可复查。</h2>
+      </div>
+    </div>
+      <figure class="lly-slot-fig" data-reveal="">
+        <div style="border: 1px solid var(--line); background: #121310;"><video src="assets/4cce0e5be98c466d1ec6c1a496645d98.mp4" aria-label="60 秒管线演示 · 合成夹具 · 宿主执行为 false" controls="" playsinline="" preload="metadata" style="display: block; width: 100%; height: auto;"></video></div>
+        <figcaption>60 秒管线演示 · 合成夹具 · 宿主执行为 false</figcaption>
+      </figure>
+
+    <ul class="lly-cando" style="margin-top: 40px">
+      <li data-reveal=""><span>01</span><b>合成演示通过</b><em>真实 CLI 入口 9 / 9。演示使用合成夹具，Blender 与 UE 的宿主执行均为 false。</em></li>
+      <li data-reveal=""><span>02</span><b>历史 FBX 经 Blender 回读</b><em>5 类历史 Tripo 物件共 9 份 FBX，8 份通过默认数值诊断。</em></li>
+      <li data-reveal=""><span>03</span><b>售货机试样保住轮廓</b><em>Blender 回读 171,337 → 44,998 三角。固定对照的两个视角，轮廓交并比均超过 99.96%。</em></li>
+    </ul>
+  </div>
+</section>
+
+<section class="dark-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal>04 · 稳定性与可行性</span>
+        <h2 data-reveal>同一份输入，<br>永远得到同一份报告。</h2>
+      </div>
+    </div>
+    <div class="lly-kpis">
+      <div data-reveal><b><span data-count="640">640</span> 项</b><span>离线回归 · 628 通过、12 跳过、0 失败</span></div>
+      <div data-reveal=""><b>8 / 9</b><span>历史 FBX 通过 Blender 默认数值诊断</span></div>
+      <div data-reveal><b>已验收</b><span>规则库与资源审查</span></div>
+      <div data-reveal=""><b>9 / 9</b><span>合成演示断言通过</span></div>
+    </div>
+    <div class="story" style="margin-top: 48px">
+      <div class="story-item" data-reveal>
+        <span class="step">可行 01 · 人工验收</span>
+        <h3>规则库与资源审查已过</h3>
+        <p>在目标 UE 5.8 工程里逐项手动操作：规则增删改、能力目录、审查结果与资产 Details 的实际值核对、豁免、导出报告。</p>
+      </div>
+      <div class="story-item" data-reveal>
+        <span class="step">可行 02 · 一份契约</span>
+        <h3>C++ 与 Python 结果一致</h3>
+        <p>C++ 侧镜像 Python 的规则校验，错误文本相同、写出的规则逐字节一致；C++ 导出的报告过 Python 契约校验。</p>
+      </div>
+      <div class="story-item" data-reveal>
+        <span class="step">可行 03 · 不放行</span>
+        <h3>读不到就报错</h3>
+        <p>读取失败、类型不符、阈值非法、未知能力都会报问题，不会默默当作通过。</p>
+      </div>
+      <div class="story-item" data-reveal>
+        <span class="step">可行 04 · 可回溯</span>
+        <h3>报告带运行记录</h3>
+        <p>报告记录检查范围、规则摘要、匹配数和是否取消，可以进版本库比对差异。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="timeline">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal>05 · 有什么问题</span>
+        <h2 data-reveal>还没证明的，<br>就不往外说。</h2>
+      </div>
+    </div>
+    <ul class="lly-issue">
+      <li data-reveal><span>待验收</span><div>导入检查（拖入 FBX 时自动检查、按规则阻止）和管线 Tab 已编译、自动化测试通过，但还没在编辑器里人工验收。</div></li>
+      <li data-reveal><span>插件加载</span><div>插件从工程 Plugins 目录加载的证据还要在目标工程里补一次；早期验收是把仓库加进 Python 路径做的，不能算数。</div></li>
+      <li data-reveal><span>范围</span><div>受控导入目前只覆盖静态网格；材质、骨骼、动画、视觉效果和运行时性能还没有宿主验收。</div></li>
+      <li data-reveal><span>没有提效数字</span><div>人工流程的基线还没测，所以只证明“拦得住”，不写节省了多少时间。</div></li>
+      <li data-reveal><span>AI 与安全</span><div>报告解释调用外部 API，离线时只能看原始报告；Agent 的网络出口还没接入安全层，写入、删除、命令目前一律拒绝。</div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="cap">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal>06 · 怎么做的</span>
+        <h2 data-reveal>四层，各管一段。</h2>
+      </div>
+    </div>
+    <ul class="lly-cando">
+      <li data-reveal><span>01</span><b>契约层</b><em>metadata、报告与规则由共享契约和 JSON Schema 约束，Python 与 C++ 两端共用同一套样例测试。</em></li>
+      <li data-reveal><span>02</span><b>Blender 插件</b><em>预检、导出、文档落盘、只读修复计划与人工触发的 AI 解释。</em></li>
+      <li data-reveal><span>03</span><b>UE 插件</b><em>C++ 编辑器模块：规则库、能力注册表、审查引擎、导入检查与结果 UI；Python 桥保留发现、导入和复检。</em></li>
+      <li data-reveal><span>04</span><b>MCP 管线</b><em>把阶段、检查和授权封装成工具，给 AI 代理调用；写入要授权，关卡要人工签字。</em></li>
+    </ul>
+    <div style="margin-top: 48px; display: flex; flex-wrap: wrap; gap: 14px" data-reveal>
+      <a class="btn btn-primary" href="https://github.com/hunshuiDD/ai-dcc-ue5-pipeline">看 GitHub 仓库 <span class="arr">↗</span></a>
+      <a class="btn btn-ghost" href="Projects.dc.html">看其他项目 <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2026 <b>林朗逸</b></span>
+  <span>UE5 TECHNICAL ARTIST · 2357312074@qq.com</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":7600}}'>
+class Component extends DCLogic {
+  toggleMenu() {
+    var nav = document.querySelector('.mobile-nav');
+    if (nav) nav.classList.toggle('open');
+  }
+  componentDidMount() {
+    var self = this;
+    this._cleanup = [];
+    this._t = setTimeout(function () { self._motion(); }, 30);
+  }
+  _motion() {
+    var self = this;
+    /* 不跟随系统“减少动态效果”：这是作品集的展示动效，由页面作者决定开启 */
+    var reduced = false;
+    var $ = function (q, r) { return Array.prototype.slice.call((r || document).querySelectorAll(q)); };
+    var docEl = document.scrollingElement || document.documentElement;
+    /* 页面是在自己内部滚动，还是整页铺开、由外层滚动（画布里两种都可能） */
+    var inner = docEl.scrollHeight > window.innerHeight + 40;
+    if (inner) document.documentElement.classList.add('lly-scroll');
+
+    /* ---- Zimon 弹簧：先模拟弹簧，烘焙成 linear() 缓动，再交给 element.animate ---- */
+    var spring = function (o) {
+      var k, c, m = 1;
+      if (o.duration != null) { var z = 1 - o.bounce, w = 2 * Math.PI / o.duration; k = w * w; c = 2 * z * Math.sqrt(k); }
+      else { k = o.stiffness; c = o.damping; }
+      var x = 0, v = 0, dt = 1 / 240, t = 0, pts = [0], i = 0;
+      while (t < 4) { var a = -k * (x - 1) - c * v; v += a * dt; x += v * dt; t += dt; i++; if (i % 4 === 0) pts.push(+x.toFixed(4)); if (Math.abs(1 - x) < 0.0005 && Math.abs(v) < 0.005) break; }
+      pts.push(1);
+      return { easing: 'linear(' + pts.join(',') + ')', duration: Math.round(t * 1000) };
+    };
+    var P = {
+      riseIn: { from: { opacity: 0, transform: 'translateY(64px)' }, s: { stiffness: 100, damping: 30 } },
+      blurIn: { from: { opacity: 0, transform: 'translateY(24px)', filter: 'blur(14px)' }, s: { stiffness: 100, damping: 30 } },
+      lift3d: { from: { opacity: 0, transform: 'perspective(1200px) translateY(40px) scale(.86) rotateX(8deg)' }, s: { stiffness: 220, damping: 30 } },
+      slideIn: { from: { opacity: 0, transform: 'translateX(150px)' }, s: { stiffness: 135, damping: 30 } },
+      spinPop: { from: { opacity: 0, transform: 'rotate(10deg) scale(.3)' }, s: { duration: 0.8, bounce: 0.4 } }
+    };
+    var to = function (from) { var r = {}; for (var p in from) r[p] = p === 'opacity' ? 1 : p === 'filter' ? 'blur(0px)' : 'none'; return r; };
+    var play = function (el, name, delay) {
+      var p = P[name], s = spring(p.s);
+      return el.animate([p.from, to(p.from)], { duration: s.duration, easing: s.easing, delay: (delay || 0) * 1000, fill: 'both' });
+    };
+    var presetOf = function (el) {
+      if (el.hasAttribute('data-anim')) return el.getAttribute('data-anim');
+      if (/^H[1-3]$/.test(el.tagName)) return 'blurIn';
+      if (el.tagName === 'FIGURE' || el.classList.contains('lly-slot-fig')) return 'lift3d';
+      if (el.classList.contains('story-item') || el.classList.contains('tl-item') || el.classList.contains('cap-item') || el.tagName === 'LI') return 'slideIn';
+      return 'riseIn';
+    };
+
+    /* 1. 入场：进入视口只播一次；同一批进入的元素按顺序交错 0.08s，最多 0.5s */
+    if (!reduced) {
+      var targets = $('[data-reveal]').filter(function (el) { return !el.closest('.hero'); });
+      targets.forEach(function (el) { var f = P[presetOf(el)].from; for (var k in f) el.style[k] = f[k]; });
+      var io = new IntersectionObserver(function (entries) {
+        var vis = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+        vis.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+        vis.forEach(function (el, i) {
+          io.unobserve(el);
+          var a = play(el, presetOf(el), Math.min(i * 0.08, 0.5));
+          a.onfinish = function () { el.style.opacity = ''; el.style.transform = ''; el.style.filter = ''; a.cancel(); };
+        });
+      }, { threshold: 0.01 });
+      targets.forEach(function (el) { io.observe(el); });
+      this._cleanup.push(function () { io.disconnect(); });
+
+      var hero = document.querySelector('.hero');
+      if (hero) {
+        $('.hero-kicker, .hero h1, .hero-lede, .hero-actions, .hero-meta', hero).forEach(function (el, i) { play(el, i === 1 ? 'blurIn' : 'riseIn', 0.15 + i * 0.1); });
+        $('.hero-tag', hero).forEach(function (el, i) { play(el, 'spinPop', 0.9 + i * 0.25); });
+        var hi = hero.querySelector('img.main');
+        if (hi) hi.animate([{ opacity: 0, filter: 'grayscale(1) blur(10px)', transform: 'scale(1.18)' }, { opacity: 1, filter: 'grayscale(0) blur(0px)', transform: 'scale(1.04)' }], { duration: 1800, easing: 'cubic-bezier(.12,.23,.5,1)', fill: 'backwards' });
+      }
+    }
+
+    /* 2. 数字计数 */
+    var counters = $('[data-count]');
+    if (!reduced && counters.length) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          cio.unobserve(e.target);
+          var el = e.target, end = parseFloat(el.getAttribute('data-count'));
+          var from = parseFloat(el.getAttribute('data-from') || '0'), dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+          var t0 = performance.now(), dur = 1800;
+          (function tick(now) {
+            var t = Math.min(1, (now - t0) / dur), k = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            el.textContent = (from + (end - from) * k).toFixed(dec);
+            if (t < 1) requestAnimationFrame(tick);
+          })(t0);
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(function (c) { c.textContent = parseFloat(c.getAttribute('data-from') || '0').toFixed(parseInt(c.getAttribute('data-dec') || '0', 10)); cio.observe(c); });
+      this._cleanup.push(function () { cio.disconnect(); });
+    }
+
+    /* 3. 逐字点亮 */
+    var groups = [];
+    $('.lly-hl').forEach(function (s) { var g = s.parentElement; if (groups.indexOf(g) < 0) groups.push(g); });
+    if (reduced) $('.lly-hl').forEach(function (s) { s.classList.add('is-lit'); });
+    else if (!inner) {
+      /* 外层滚动时拿不到本页的滚动位置：进入视口后按阅读速度逐字点亮 */
+      var hio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting || e.intersectionRatio < 0.5) return;
+          hio.unobserve(e.target);
+          $('.lly-hl', e.target).forEach(function (s, i) { setTimeout(function () { s.classList.add('is-lit'); }, 300 + i * 38); });
+        });
+      }, { threshold: [0, 0.5, 1] });
+      groups.forEach(function (g) { hio.observe(g); });
+      this._cleanup.push(function () { hio.disconnect(); });
+    }
+
+    /* 4. 首屏：下面的内容滑上来盖住它（固定 + 变暗 + 视差） */
+    var heroEl = document.querySelector('.hero');
+    var dim = document.querySelector('[data-hero-dim]');
+    var heroImg = heroEl ? heroEl.querySelector('img.main') : null;
+    var header = document.querySelector('.site-header');
+    var applyHero = function (p) {
+      if (dim) dim.style.opacity = (p * 0.6).toFixed(3);
+      if (heroImg) heroImg.style.transform = 'translateY(' + (p * 8).toFixed(2) + '%) scale(' + (1.04 + 0.08 * p).toFixed(4) + ')';
+    };
+    if (heroEl && !reduced && !inner) {
+      /* 外层滚动：用可见比例推算滚出了多少，把首屏往下推，模拟“钉住” */
+      var th = []; for (var i = 0; i <= 50; i++) th.push(i / 50);
+      var pio = new IntersectionObserver(function (es) {
+        var e = es[es.length - 1], h = e.boundingClientRect.height || 1;
+        var leavingTop = e.intersectionRect.height < h && Math.abs(e.intersectionRect.bottom - e.boundingClientRect.bottom) < 2;
+        var out = leavingTop ? (h - e.intersectionRect.height) : 0;
+        heroEl.style.transform = 'translateY(' + (out * 0.82).toFixed(1) + 'px)';
+        applyHero(Math.min(1, out / h));
+      }, { threshold: th });
+      pio.observe(heroEl);
+      this._cleanup.push(function () { pio.disconnect(); });
+    }
+
+    /* 6. 鼠标反馈：跟随光标的圆环、首屏视差、卡片倾斜、按钮磁吸；顶部滚动进度条 */
+    var bar = document.querySelector('.lly-progress');
+    var fine = !window.matchMedia || window.matchMedia('(pointer: fine)').matches;
+    if (fine) {
+      var cur = document.querySelector('.lly-cursor');
+      var mx = -200, my = -200, cx = -200, cy = -200, alive = true;
+      var onMove = function (e) { mx = e.clientX; my = e.clientY; if (cur) cur.style.opacity = '1'; };
+      var onOver = function (e) {
+        var t = e.target && e.target.closest ? e.target.closest('a, button, figure, .story-item, .cap-item, .proj-row, .lly-kpis > div') : null;
+        if (cur) cur.classList.toggle('is-big', !!t);
+      };
+      var onOut = function (e) { if (!e.relatedTarget && cur) cur.style.opacity = '0'; };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseover', onOver);
+      document.addEventListener('mouseout', onOut);
+      (function loop() {
+        if (!alive) return;
+        cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
+        if (cur) cur.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0) translate(-50%,-50%)';
+        requestAnimationFrame(loop);
+      })();
+      this._cleanup.push(function () { alive = false; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseover', onOver); document.removeEventListener('mouseout', onOut); });
+
+      var heroBox = document.querySelector('.hero-visual');
+      var heroPic = heroBox ? heroBox.querySelector('img.main') : null;
+      if (heroBox && heroPic) {
+        heroBox.addEventListener('mousemove', function (e) {
+          var r = heroBox.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          heroPic.style.translate = (dx * -28).toFixed(1) + 'px ' + (dy * -20).toFixed(1) + 'px';
+          $('.hero-tag', heroBox).forEach(function (t, i) { t.style.translate = (dx * (18 + i * 10)).toFixed(1) + 'px ' + (dy * (14 + i * 8)).toFixed(1) + 'px'; });
+        });
+        heroBox.addEventListener('mouseleave', function () { heroPic.style.translate = ''; $('.hero-tag', heroBox).forEach(function (t) { t.style.translate = ''; }); });
+      }
+
+      $('.case-figure, .lly-slot-fig, .story-item, .lly-kpis > div, .thumb-strip figure').forEach(function (el) {
+        el.style.transition = 'transform .5s cubic-bezier(.12,.23,.5,1)';
+        el.addEventListener('mousemove', function (e) {
+          var r = el.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transition = 'transform .12s linear';
+          el.style.transform = 'perspective(900px) rotateX(' + (dy * -7).toFixed(2) + 'deg) rotateY(' + (dx * 9).toFixed(2) + 'deg) translateZ(0)';
+        });
+        el.addEventListener('mouseleave', function () { el.style.transition = 'transform .6s cubic-bezier(.34,1.56,.64,1)'; el.style.transform = ''; });
+      });
+
+      $('.btn, .case-link').forEach(function (b) {
+        b.addEventListener('mousemove', function (e) {
+          var r = b.getBoundingClientRect();
+          b.style.translate = ((e.clientX - r.left - r.width / 2) * 0.25).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + 'px';
+        });
+        b.addEventListener('mouseleave', function () { b.style.translate = ''; });
+      });
+    }
+    var raf = 0;
+    var update = function () {
+      raf = 0;
+      if (bar) { var max = Math.max(1, docEl.scrollHeight - window.innerHeight); bar.style.transform = 'scaleX(' + Math.min(1, (window.scrollY || docEl.scrollTop || 0) / max).toFixed(4) + ')'; }
+      if (!inner) return;
+      var vh = window.innerHeight || 800;
+      if (heroEl && !reduced) {
+        var hh = header ? header.offsetHeight : 0;
+        heroEl.style.top = Math.min(hh, vh - heroEl.offsetHeight) + 'px';
+        applyHero(Math.max(0, Math.min(1, (window.scrollY || docEl.scrollTop || 0) / Math.max(1, heroEl.offsetHeight))));
+      }
+      if (!reduced) {
+        var line = vh * 0.62;
+        $('.lly-hl').forEach(function (s) { var lit = s.getBoundingClientRect().top < line; if (lit !== s.classList.contains('is-lit')) s.classList.toggle('is-lit', lit); });
+      }
+    };
+    var onScroll = function () { if (!raf) raf = requestAnimationFrame(update); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    this._cleanup.push(function () { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); if (raf) cancelAnimationFrame(raf); });
+    update();
+
+    /* 5. 项目列表悬停预览（原站功能） */
+    var list = document.getElementById('proj-list');
+    var preview = document.getElementById('hover-preview');
+    if (list && preview && window.matchMedia('(pointer: fine)').matches && !reduced) {
+      var pimg = preview.querySelector('img'), mx = 0, my = 0, pr = 0;
+      var place = function () { pr = 0; var w = preview.offsetWidth, h = preview.offsetHeight, x = mx + 28, y = my - h / 2; if (x + w > window.innerWidth - 16) x = mx - w - 28; y = Math.max(12, Math.min(window.innerHeight - h - 12, y)); preview.style.left = x + 'px'; preview.style.top = y + 'px'; };
+      list.querySelectorAll('.proj-row').forEach(function (row) {
+        row.addEventListener('mouseenter', function () { var src = row.getAttribute('data-preview'); if (src && pimg) pimg.setAttribute('src', src); preview.classList.add('on'); });
+        row.addEventListener('mouseleave', function () { preview.classList.remove('on'); });
+      });
+      list.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; if (!pr) pr = requestAnimationFrame(place); });
+    }
+  }
+  componentWillUnmount() {
+    clearTimeout(this._t);
+    (this._cleanup || []).forEach(function (f) { f(); });
+  }
+  renderVals() {
+    var t = '资产从 Blender 到 UE5 的路上，问题大多不是导不进去，而是导进去两周后才发现错了。这条流水线让每个问题在导出前、导入前就被拦下，并且每一步都留下证据。';
+    var keys = ['两周后才发现错了', '导出前、导入前', '留下证据'], m = [];
+    for (var i = 0; i < t.length; i++) m.push('0');
+    keys.forEach(function (k) { for (var s = t.indexOf(k); s > -1; s = t.indexOf(k, s + 1)) for (var j = s; j < s + k.length; j++) m[j] = '1'; });
+    return { toggleMenu: this.toggleMenu, pitch: t.split('').map(function (ch, i) { return { ch: ch, key: m[i] }; }) };
+  }
+}
+</script>
+</body>
+</html>

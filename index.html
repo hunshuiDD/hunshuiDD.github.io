@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>林朗逸 · UE5 技术美术</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="assets/971bf237c04f6bc4aef64f932ddf3231.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&amp;family=Noto+Serif+SC:wght@400;600;900&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+/* ---- 动效层：参数来自 Zimon Style（弹簧入场、首屏固定、计数、逐字点亮、跑马灯） ---- */
+html body [data-reveal]{opacity:1;transform:none;transition:none}
+.hero{position:relative;z-index:0;will-change:transform}
+html.lly-scroll .hero{position:sticky;top:0}
+.hero ~ section,.hero ~ footer,.lly-ticker{position:relative;z-index:1}
+.hero ~ section:not(.dark-sec),.hero ~ footer{background:var(--paper)}
+.hero-visual img.main{animation:none;will-change:transform,filter}
+.lly-dim{position:absolute;inset:0;background:var(--paper);opacity:0;pointer-events:none;z-index:5}
+.lly-ticker{background:var(--ink);color:var(--paper);overflow:hidden;padding:14px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.lly-ticker-track{display:flex;width:max-content;gap:28px;animation:llyMarquee 32s linear infinite}
+.lly-ticker-item{display:flex;align-items:center;gap:28px;white-space:nowrap;font-family:var(--mono);font-size:12px;letter-spacing:.14em}
+.lly-ticker-item::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--clay)}
+@keyframes llyMarquee{to{transform:translateX(-50%)}}
+.lly-hl{color:#b3afa4;transition:color .3s cubic-bezier(.44,0,.56,1)}
+.lly-hl.is-lit{color:var(--ink)}
+.lly-hl.is-lit[data-key="1"]{color:var(--clay-ink)}
+.btn .arr,.case-link span,.cap-item .go,.proj-row .go{display:inline-block;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.btn:hover .arr{transform:translate(3px,-3px)}
+.case-figure .frame img,.thumb-strip .ph img{transition:transform .6s cubic-bezier(.12,.23,.5,1)}
+.case-figure:hover .frame img,.thumb-strip figure:hover .ph img{transform:scale(1.04)}
+.lly-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lly-layers{list-style:none;margin:26px 0 0;padding:0;border-top:1px solid var(--ink)}
+.lly-layers li{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,1.4fr);gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.7;align-items:baseline}
+.lly-layers li span{font-family:var(--mono);font-size:12px;color:var(--clay-ink)}
+.lly-layers li em{font-style:normal;color:var(--ink-soft)}
+@media (max-width:700px){.lly-layers li{grid-template-columns:36px minmax(0,1fr)}.lly-layers li em{grid-column:2}}
+
+.lly-cursor{position:fixed;left:0;top:0;width:34px;height:34px;border:1.5px solid var(--clay-ink);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;transition:width .35s cubic-bezier(.34,1.56,.64,1),height .35s cubic-bezier(.34,1.56,.64,1),background-color .3s,opacity .3s;mix-blend-mode:multiply}
+.lly-cursor.is-big{width:76px;height:76px;background:rgba(193,95,60,.14)}
+.lly-progress{position:fixed;left:0;top:0;right:0;height:3px;background:var(--clay-ink);transform-origin:0 50%;transform:scaleX(0);z-index:9998;pointer-events:none}
+.btn,.case-link{transition:translate .35s cubic-bezier(.34,1.56,.64,1),background-color .2s,color .2s,gap .2s}
+.hero-visual img.main,.hero-tag{transition:translate .6s cubic-bezier(.12,.23,.5,1)}
+</style>
+<script>
+(function () {
+  var id = window.location.hash.slice(1);
+  if (!id) return;
+  var jump = function () {
+    var target = document.getElementById(id);
+    if (!target || !target.getClientRects().length || window.location.hash.slice(1) !== id) return;
+    var top = window.scrollY + target.getBoundingClientRect().top - 92;
+    window.scrollTo({ top: top, behavior: 'instant' });
+  };
+  requestAnimationFrame(function () {
+    jump();
+    document.fonts.ready.then(function () { requestAnimationFrame(jump); });
+  });
+  if (document.readyState !== 'complete') {
+    window.addEventListener('load', function () { requestAnimationFrame(jump); }, { once: true });
+  }
+})();
+</script>
+</helmet>
+<div style="width: 100%; min-height: 100vh">
+<div class="lly-progress" aria-hidden="true"></div>
+<div class="lly-cursor" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="brand" href="Main.dc.html">
+    <span class="mark">作</span>
+    <span class="name">林朗逸<span>作品集 · PORTFOLIO</span></span>
+  </a>
+  <nav class="site-nav">
+    <a href="Projects.dc.html">项目</a>
+    <a href="Main.dc.html#capability">能力</a>
+    <a href="Resume.dc.html">简历</a>
+    <a href="Main.dc.html#contact">联系</a>
+  </nav>
+  <span class="header-status"><i></i>27 届 · 正在找 TA 校招</span>
+  <button class="menu-btn" type="button" onClick="{{toggleMenu}}">菜单</button>
+</header>
+<nav class="mobile-nav">
+  <a href="Projects.dc.html">项目</a>
+  <a href="Main.dc.html#capability">能力</a>
+  <a href="Resume.dc.html">简历</a>
+  <a href="Main.dc.html#contact">联系</a>
+</nav>
+
+
+<section class="hero" data-hero="1">
+  <div class="lly-dim" data-hero-dim="1" aria-hidden="true"></div>
+  <div class="hero-copy">
+    <span class="hero-kicker">UE5 · TECHNICAL ARTIST</span>
+    <h1>为二次元世界<br>构建<em style="white-space:nowrap;">可信的技术表达</em></h1>
+    <p class="hero-lede">一名专注二次元实时渲染的技术美术：做角色渲染、写生产工具，也盯着 ProfileGPU 找瓶颈——<strong>让好看的效果跑得动、讲得清、改得下去</strong>。</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="Projects.dc.html">看我的项目 <span class="arr">→</span></a>
+      <a class="btn btn-ghost" href="https://www.bilibili.com/video/BV1yp3x6kEuH/" target="_blank" rel="noreferrer">B 站 Demo 视频 <span class="arr">↗</span></a>
+    </div>
+    <div class="hero-meta">
+      <span>方向 <b>角色渲染与工具管线</b></span>
+      <span>求职 <b>27 届 · 技术美术校招</b></span>
+      <span>产出 <b><span data-count="31">31</span> 套材质函数 · <span data-count="3">3</span> 个自研插件</b></span>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <img class="main" src="assets/92790af4e92c30676160936b2399cfa0.jpg" alt="角色渲染 · 室内布光成片" fetchpriority="high" decoding="async">
+    <svg class="badge-rot" viewBox="0 0 100 100" aria-hidden="true">
+      <defs><path id="circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"></path></defs>
+      <circle class="core" cx="50" cy="50" r="27"></circle>
+      <text><textPath href="#circ">OPEN TO WORK · UE5 TA · 2027 ·&nbsp;</textPath></text>
+      <text x="50" y="55" text-anchor="middle" style="font-size:13px; letter-spacing:1px; fill:#f0eee6; font-family:'IBM Plex Mono',monospace; font-weight:600;">TA</text>
+    </svg>
+    <div class="hero-tag t1">
+      <small>SHADING MODEL</small>
+      <strong>Stylized Lit · NPR 全在 Emissive 自算</strong>
+    </div>
+    <div class="hero-tag t2">
+      <small>FRAME TIME @1080P</small>
+      <strong>19.12 → <span data-count="16.60" data-from="19.12" data-dec="2">16.60</span> ms</strong>
+    </div>
+    <div class="hero-caption">
+      <span>个人项目《UE5 PBR × NPR 角色渲染系统》实机画面</span>
+      <span class="mono">UE 5.8 · 无引擎源码改动</span>
+    </div>
+  </div>
+</section>
+
+
+<div class="lly-ticker" aria-label="技术关键词：FACE SDF、WARP SSS、HAIR ANISO、FUR POM、SHELL OUTLINE、PER-OBJECT SHADOW、SVE + RDG PASS、JSON SCHEMA、BLENDER ADD-ON、UE EDITOR PYTHON、DEFERRED SHADING、VSM">
+  <div class="lly-ticker-track" aria-hidden="true"><sc-for list="{{tickerItems}}" as="t" hint-placeholder-count="24"><span class="lly-ticker-item">{{t}}</span></sc-for></div>
+</div>
+
+<section class="intro">
+  <div class="wrap intro-stack">
+    <span class="side-label" data-reveal="">写在前面</span>
+    <div>
+      <p class="big"><span class="lly-sr">这个站里的每张图都来自可运行的工程，不是摆拍。我习惯把每个效果拆到「能解释、能复现、能继续优化」为止——所以你会看到很多对比图、调试视图和性能数字，而不是只有精修成片。</span><sc-for list="{{intro1}}" as="c" hint-placeholder-count="40"><span aria-hidden="true" class="lly-hl" data-key="{{c.key}}">{{c.ch}}</span></sc-for></p>
+      <p class="big"><span class="lly-sr">如果哪一段你想看完整的推理过程，点进案例页，我把踩过的坑也写进去了。</span><sc-for list="{{intro2}}" as="c" hint-placeholder-count="20"><span aria-hidden="true" class="lly-hl" data-key="{{c.key}}">{{c.ch}}</span></sc-for></p>
+    </div>
+  </div>
+</section>
+
+
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal="">01 · 代表项目</span>
+        <h2 data-reveal="" style="--rd:.06s">先看最强证据，<br>再看技术拆解。</h2>
+      </div>
+    </div>
+
+    
+    <article class="case" id="case-npr">
+      <div class="case-top">
+        <div>
+          <h3 class="case-title" data-reveal="">UE5 PBR × NPR 角色渲染系统
+            <span class="en">CEL-SHADED CHARACTER RENDERING SYSTEM</span>
+          </h3>
+          <div class="case-facts" data-reveal="" style="--rd:.06s">
+            <div class="row"><span>角色</span><span>独立 Technical Artist · Rendering / Runtime / Tools</span></div>
+            <div class="row"><span>引擎</span><span>Unreal Engine 5.7 → 5.8 · 无引擎源码改动</span></div>
+            <div class="row"><span>技术栈</span><span>Material · HLSL / USH · C++ · Blueprint · EUW · FSceneViewExtension + RDG</span></div>
+          </div>
+          <div class="case-chips" data-reveal="" style="--rd:.1s">
+            <span class="chip">FACE SDF</span>
+            <span class="chip">WARP SSS</span>
+            <span class="chip">HAIR ANISO</span>
+            <span class="chip">FUR POM</span>
+            <span class="chip">SHELL OUTLINE</span>
+            <span class="chip">PER-OBJECT SHADOW</span>
+            <span class="chip">SVE + RDG PASS</span>
+            <span class="chip">逆向还原</span>
+            <span class="chip hot">31 个可复用材质函数</span>
+          </div>
+          <div class="case-foot" data-reveal="" style="--rd:.12s">
+            <a class="case-link" href="Case-CelShading.dc.html">阅读完整案例 <span>→</span></a>
+            <span class="evidence-count"><b>IN-PAGE EVIDENCE</b>4 / 10 STUDIES</span>
+          </div>
+        </div>
+        <div>
+          <p class="case-desc" data-reveal="">二次元渲染最难的不是「像」，而是「稳」：转头时脸部阴影不能跳变，主光、局部光、环境光同时存在时画面不能打架。这套系统用 31 个材质函数组成复用库，配一层 C++ 数据驱动运行时做逐帧光照仲裁和三档自阴影，再加引擎层 RDG 自定义 Pass 和一套调试视图——目标只有一个：效果可解释，问题可归因。</p>
+          <figure class="case-figure" data-reveal="" style="--rd:.08s; margin-top: 26px;">
+            <div class="frame"><img src="assets/2d745e0cb27ec2a6d04520173c447005.jpg" alt="Face SDF 脸部渲染特写" loading="lazy"></div>
+            <figcaption><span>Face SDF：任意光向下，脸部阴影分区保持二次元观感</span><span class="mono">FACE SDF</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="compare-block">
+        <p class="why" data-reveal=""><span class="why-kicker">MATERIAL REUSE</span><strong>双形态：一次针对材质库的复用验证。</strong>两套形态外观差别很大，底下却是同一批 master 材质，区别只在材质实例的参数与 Static Switch——master 一开始就按功能切模块（SDF 阴影、各向异性高光、POM 视差、Matcap、描边），而不是塞进一张巨图。所以新增一个形态的成本是「建实例、调参数」，不是「再写一套材质」；改 master 里的某个模块，所有形态、所有分档同步生效，不会出现两套材质各自漂移。</p>
+
+        <div class="form-pair">
+          <figure class="case-figure" data-reveal="" style="--rd:.06s">
+            <div class="frame"><img src="assets/09e8416285d635c3987d313b0ff69b00.jpg" alt="形态 A · 基础配色与配件组" loading="lazy" decoding="async"></div>
+            <figcaption><span>形态 A ／ 基础配色与配件组</span><span class="mono">FORM A</span></figcaption>
+          </figure>
+          <figure class="case-figure" data-reveal="" style="--rd:.12s">
+            <div class="frame"><img src="assets/4604e13f2da6db495bc3530c46b2ea59.jpg" alt="形态 B · 只换实例参数，未新增任何 master" loading="lazy" decoding="async"></div>
+            <figcaption><span>形态 B ／ 只换实例参数，未新增任何 master</span><span class="mono">FORM B</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="thumb-strip">
+        <figure data-reveal="">
+          <div class="ph"><img src="assets/18d3f17ccf37721b87161d93c588fb61.jpg" alt="发丝高光特写" loading="lazy"></div>
+          <figcaption><b>HAIR</b>Flow Map 驱动切线偏移，主副两层高光独立调节。</figcaption>
+        </figure>
+        <figure data-reveal="" style="--rd:.06s">
+          <div class="ph"><img src="assets/1bbb02909377f6044a79c2cbddd97bae.jpg" alt="描边组合效果" loading="lazy"></div>
+          <figcaption><b>OUTLINE</b>壳层外轮廓与屏幕空间内描边分工，各管各的边。</figcaption>
+        </figure>
+        <figure data-reveal="" style="--rd:.12s">
+          <div class="ph"><img src="assets/9e788c4f352d95d745662ba6a6dd8090.jpg" alt="绒毛渲染特写" loading="lazy"></div>
+          <figcaption><b>FUR</b>POM 假体积绒毛，一眼体积感，不开壳层层高。</figcaption>
+        </figure>
+        <figure data-reveal="" style="--rd:.18s">
+          <div class="ph"><img src="assets/975c79b6f6c425958a2db82dbb5db9cd.webp" alt="统一材质调试视图" loading="lazy"></div>
+          <figcaption><b>DEBUG VIEW</b>C++ 写 MPC，材质函数切换 BaseColor / 法线 / SDF 中间结果。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    
+    <article class="case" id="case-dcc">
+      <div class="case-top">
+        <div>
+          <h3 class="case-title" data-reveal="">AI-DCC → UE5 美术资产流水线
+            <span class="en">OFFLINE-FIRST ART PIPELINE TOOLKIT</span>
+          </h3>
+          <div class="case-facts" data-reveal="" style="--rd:.06s">
+            <div class="row"><span>角色</span><span>独立 Technical Artist / Technical Designer · Pipeline Tools</span></div>
+            <div class="row"><span>仓库</span><span>github.com/hunshuiDD/ai-dcc-ue5-pipeline</span></div>
+            <div class="row"><span>技术栈</span><span>Python · Blender Add-on · UE 5.8 C++ / Slate 编辑器插件 · MCP · JSON Schema</span></div>
+          </div>
+          <div class="case-chips" data-reveal="" style="--rd:.1s">
+            <span class="chip">METADATA / REPORT 契约</span>
+            <span class="chip">确定性规则</span>
+            <span class="chip">UE 原生规则库</span>
+            <span class="chip">资源审查</span>
+            <span class="chip">MCP 人工关卡</span>
+            <span class="chip hot">AI 只做归纳总结，不改资产</span>
+          </div>
+          <a class="case-link" href="Case-DCC.dc.html" data-reveal="" style="--rd:.14s">阅读完整案例 <span>→</span></a>
+
+          <ul class="ledger" data-reveal="" style="--rd:.18s">
+            <li>
+              <span class="lv">已实现</span>
+              <b>共享契约 + 640 项离线回归（628 通过、12 跳过、0 失败）</b>
+              <code>Blender 插件、UE 插件与 MCP 管线共用同一套 Schema</code>
+            </li>
+            <li>
+              <span class="lv">已实现</span>
+              <b>UE 5.8 C++ 规则库与资源审查插件</b>
+              <code>规则库与资源审查已在编辑器内人工验收</code>
+            </li>
+            <li>
+              <span class="lv ok">已验证</span>
+              <b>真实 Blender / FBX / UE5 导入结果</b>
+              <code>已按人工验收清单核对宿主版本、日志与截图</code>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="case-desc" data-reveal="">美术资产从 Blender 到 UE5 的路上，问题大多不是「导不进去」，而是「导进去两周后才发现错了」。这条流水线用共享 metadata/report 契约把预检、导出、导入前发现、复检串成可追溯链路，每一步都留下 JSON/CSV 证据。AI 在里面的角色被刻意限制：只解释证据，不碰资产，修复方案必须人工批准。</p>
+          <figure class="case-figure" data-reveal="" style="--rd:.08s; margin-top: 26px;">
+            <div class="frame" style="background:#fff;"><img src="assets/2223c9ea547822c17aeafbfe677ce8c6.png" alt="ai-dcc-ue5-pipeline 仓库预览" loading="lazy" style="object-fit:contain;"></div>
+            <figcaption><span>公开源码与文档，契约和测试都在仓库里</span><span class="mono">OPEN SOURCE</span></figcaption>
+          </figure>
+        </div>
+      </div>
+        </article>
+
+    <!-- 项目三：个人面部 SDF 光照 -->
+    <article class="case" id="case-sdf">
+      <div class="case-top">
+        <div>
+          <h3 class="case-title" data-reveal="">个人面部 SDF 光照
+            <span class="en">PERSONAL FACE SDF LIGHTING</span>
+          </h3>
+          <div class="case-facts" data-reveal="" style="--rd:.06s">
+            <div class="row"><span>资产</span><span>CC0 公开头模 · GEO-head_stylized</span></div>
+            <div class="row"><span>引擎</span><span>Unreal Engine 5.8.3 · DX12 / SM6</span></div>
+            <div class="row"><span>技术栈</span><span>Cycles 可见性烘焙 · RGBA16 · UE 材质 / UMG</span></div>
+          </div>
+          <div class="case-chips" data-reveal="" style="--rd:.1s">
+            <span class="chip">FACE SDF</span>
+            <span class="chip">局部清理</span>
+            <span class="chip hot">六光向实拍</span>
+          </div>
+          <div class="case-foot" data-reveal="" style="--rd:.12s">
+            <a class="case-link" href="Work-SDF.dc.html">阅读完整案例 <span>→</span></a>
+            <span class="evidence-count"><b>验证</b>GPU 抽样 · 双灯自动化</span>
+          </div>
+          <ul class="ledger" data-reveal="" style="--rd:.16s">
+            <li><span class="lv ok">实测</span><b>鼻口保住了</b><code>保护区 97,116 个像素，三档改动均为 0</code></li>
+            <li><span class="lv">UE 验证</span><b>主光方向与选灯一致</b><code>双灯自动化 9 次，逐项一致</code></li>
+          </ul>
+        </div>
+        <div>
+          <p class="case-desc" data-reveal="">用公开头模分离烘焙、清理和引擎验证。耳内保留原始，颈根强清理。在 UE 中用六光向和 UMG 分屏擦除看差异。</p>
+          <figure class="case-figure" data-reveal="" style="margin: 0">
+            <div class="frame"><img src="assets/cdd60eb2a7f25ce2ca2a7b0fbc764883.png" alt="UE 5.8.3 面部 SDF 六光向" style="object-fit: contain"></div>
+          </figure>
+          <p class="case-desc" data-reveal="">角色时域稳定也做了同轨对照。关闭引擎 AA 时，眼鼻嘴误差下降 10.53%；TSR 下上升 5.64%，仍未达标。</p>
+          <a class="case-link" href="Work-SDF.dc.html#temporal" data-reveal="">看角色时域稳定 <span>→</span></a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+<section class="dark-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal="">02 · 一次优化实录</span>
+        <h2 data-reveal="" style="--rd:.06s">数字背后，<br>是一次完整的推理。</h2>
+      </div>
+      <p data-reveal="" style="--rd:.12s">渲染系统做到一半时帧率掉了 8 帧。下面是我把它找回来的完整过程——比起结果，我更想让你看到过程。</p>
+    </div>
+
+    <div class="story">
+      <div class="story-item" data-reveal="">
+        <span class="step">STEP 01 · 现象</span>
+        <h3>帧时间无故多出 3ms</h3>
+        <p>原生 1080P、固定机位、独立进程下，帧时间从 16.6ms 涨到 19.1ms。stat unit 显示压力在渲染线程，不在 GPU。</p>
+      </div>
+      <div class="story-item" data-reveal="">
+        <span class="step">STEP 02 · 证伪</span>
+        <h3>先排除五条「必然有效」的路</h3>
+        <p>降光追分辨率、降渲染分辨率、关 RHI 线程、关异步计算、关遮挡查询——逐一实测，全部无效。写下来，免得以后重走。</p>
+      </div>
+      <div class="story-item" data-reveal="">
+        <span class="step">STEP 03 · 定位</span>
+        <h3>RenderDoc 截帧抓到真凶</h3>
+        <p>硬件光追的 BVH 每个视图都在重建，而场景里有多个捕获视图。开销全部压在渲染线程上——这解释了为什么降画质没用。</p>
+      </div>
+      <div class="story-item" data-reveal="">
+        <span class="step">STEP 04 · 修复</span>
+        <h3>一行 cvar，视觉无损</h3>
+        <p>切换 BVH 重建策略后，GI 完整保留，画面逐像素对比无差异。修复方案被写回材质系统的参数面板，可一键开关验证。</p>
+      </div>
+    </div>
+
+    <div class="story-result" data-reveal="">
+      <span class="num">52.3 <em>→</em> <span data-count="60.2" data-from="52.3" data-dec="1">60.2</span> <small style="font-size:0.4em; color:rgba(240,233,218,0.6);">FPS</small></span>
+      <span class="note">Frame 19.12 → 16.60 ms · 原生 1080P · 固定机位 · 独立进程实测，非编辑器 PIE 数据。</span>
+    </div>
+  </div>
+</section>
+
+
+<section class="cap" id="capability">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal="">03 · 能力</span>
+        <h2 data-reveal="" style="--rd:.06s">能力不标百分比，<br>直接链到证据。</h2>
+      </div>
+      <p data-reveal="" style="--rd:.12s">每一项能力都对应上面某个项目里的具体段落，点过去就能验证。</p>
+    </div>
+    <div class="cap-list">
+      <a class="cap-item" href="Case-CelShading.dc.html" data-reveal="">
+        <span class="no">01</span>
+        <h3>渲染与着色<span>Rendering</span></h3>
+        <p>Material / HLSL · PBR 与 NPR · Face SDF · 描边体系 · 角色打光 · SceneViewExtension + RDG 自定义 Pass · 数据驱动运行时与 Debug View</p>
+        <span class="go">→</span>
+      </a>
+      <a class="cap-item" href="Case-CelShading.dc.html" data-reveal="" style="--rd:.05s">
+        <span class="no">02</span>
+        <h3>性能优化<span>Optimization</span></h3>
+        <p>stat unit / csvprofile · Unreal Insights · RenderDoc 截帧 · 渲染线程瓶颈定位——上面那个 52 → 60 FPS 的故事就是这项能力的完整样本</p>
+        <span class="go">→</span>
+      </a>
+      <a class="cap-item" href="Case-DCC.dc.html" data-reveal="" style="--rd:.1s">
+        <span class="no">03</span>
+        <h3>工具与管线<span>Tooling</span></h3>
+        <p>Python · EUW · Blender Add-on · FBX 导出规则 · JSON Schema · 命名校验与资产审计 · 结构化报告</p>
+        <span class="go">→</span>
+      </a>
+      <a class="cap-item" href="Case-DCC.dc.html" data-reveal="" style="--rd:.15s">
+        <span class="no">04</span>
+        <h3>AI 辅助开发<span>Agent</span></h3>
+        <p>Codex · Claude Agent · OpenAI / Anthropic API · LLM 集成——但始终坚持「AI 解释证据，人做决策」的交接方式</p>
+        <span class="go">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<section class="timeline">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="no" data-reveal="">04 · 经历</span>
+        <h2 data-reveal="" style="--rd:.06s">一边上学，<br>一边把渲染当正经事做。</h2>
+      </div>
+    </div>
+    <div class="tl">
+      <div class="tl-item" data-reveal="" style="--rd:.15s">
+        <time>2026.06 — 至今</time>
+        <div>
+          <h3>Blender — UE5 美术资产验证与导入工具链</h3>
+          <p>Python / bpy 资产检查插件与导出预设，JSON 规则驱动，UE5 侧批量导入、材质实例创建与错误报告。</p>
+        </div>
+      </div><div class="tl-item" data-reveal="" style="--rd:.1s">
+        <time>2026.05 — 至今</time>
+        <div>
+          <h3>UE5 数据驱动二次元角色渲染系统</h3>
+          <p>以 31 个材质函数为复用单元的 PBR/NPR 角色渲染系统，C++ 运行时控制层，逐帧灯光仲裁，脸与身体分走两套自阴影通路。</p>
+        </div>
+      </div><div class="tl-item" data-reveal="" style="--rd:.05s">
+        <time>2024.05 — 2026.02</time>
+        <div>
+          <h3>校游戏开发社 · UE5 技术美术 / 渲染负责</h3>
+          <p>参与校内游戏 Demo 开发，负责材质、灯光与风格化渲染效果，和程序、美术同学一起把效果落地。</p>
+        </div>
+      </div><div class="tl-item" data-reveal="">
+        <time>2023.09 — 2027.06</time>
+        <div>
+          <h3>哈尔滨师范大学 · 数字媒体技术（本科）</h3>
+          <p>GPA 3.6/4.0，专业排名前 15%。主修计算机图形学、三维动画与游戏引擎。</p>
+        </div>
+      </div>
+      
+      
+      
+      
+    </div>
+  </div>
+</section>
+
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2 data-reveal="">想聊聊渲染，<br>或者有校招机会？</h2>
+    <p data-reveal="" style="--rd:.06s; color: var(--ink-soft); max-width: 34em; margin: 0 0 26px;">27 届，正在找 Technical Artist 方向的校招岗位。邮件最快，B 站评论区也行。</p>
+    <a class="mail" href="mailto:2357312074@qq.com" data-reveal="" style="--rd:.1s">2357312074@qq.com</a>
+    <div class="links" data-reveal="" style="--rd:.14s">
+      <a href="https://github.com/hunshuiDD" target="_blank" rel="noreferrer">GitHub · hunshuiDD ↗</a>
+      <a href="https://www.bilibili.com/video/BV1yp3x6kEuH/" target="_blank" rel="noreferrer">B 站 Demo ↗</a>
+      <a href="Resume.dc.html">完整简历 →</a>
+      <a href="assets/6e1607719f390d2ade68f67b12490db6.pdf" download="">最新简历 PDF ↓</a>
+      <a href="assets/9bfb4dddf73168eef91494941b5e7905.pdf" download="">作品集 PDF ↓ <span class="fsize">3.4 MB</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2026 <b>林朗逸</b></span>
+  <span>UE5 TECHNICAL ARTIST · 项目截图与测试口径见各案例</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":8600}}'>
+class Component extends DCLogic {
+  toggleMenu() {
+    var nav = document.querySelector('.mobile-nav');
+    if (nav) nav.classList.toggle('open');
+  }
+  componentDidMount() {
+    var self = this;
+    this._cleanup = [];
+    this._t = setTimeout(function () { self._motion(); }, 30);
+  }
+  _motion() {
+    var self = this;
+    /* 不跟随系统“减少动态效果”：这是作品集的展示动效，由页面作者决定开启 */
+    var reduced = false;
+    var $ = function (q, r) { return Array.prototype.slice.call((r || document).querySelectorAll(q)); };
+    var docEl = document.scrollingElement || document.documentElement;
+    /* 页面是在自己内部滚动，还是整页铺开、由外层滚动（画布里两种都可能） */
+    var inner = docEl.scrollHeight > window.innerHeight + 40;
+    if (inner) document.documentElement.classList.add('lly-scroll');
+
+    /* ---- Zimon 弹簧：先模拟弹簧，烘焙成 linear() 缓动，再交给 element.animate ---- */
+    var spring = function (o) {
+      var k, c, m = 1;
+      if (o.duration != null) { var z = 1 - o.bounce, w = 2 * Math.PI / o.duration; k = w * w; c = 2 * z * Math.sqrt(k); }
+      else { k = o.stiffness; c = o.damping; }
+      var x = 0, v = 0, dt = 1 / 240, t = 0, pts = [0], i = 0;
+      while (t < 4) { var a = -k * (x - 1) - c * v; v += a * dt; x += v * dt; t += dt; i++; if (i % 4 === 0) pts.push(+x.toFixed(4)); if (Math.abs(1 - x) < 0.0005 && Math.abs(v) < 0.005) break; }
+      pts.push(1);
+      return { easing: 'linear(' + pts.join(',') + ')', duration: Math.round(t * 1000) };
+    };
+    var P = {
+      riseIn: { from: { opacity: 0, transform: 'translateY(64px)' }, s: { stiffness: 100, damping: 30 } },
+      blurIn: { from: { opacity: 0, transform: 'translateY(24px)', filter: 'blur(14px)' }, s: { stiffness: 100, damping: 30 } },
+      lift3d: { from: { opacity: 0, transform: 'perspective(1200px) translateY(40px) scale(.86) rotateX(8deg)' }, s: { stiffness: 220, damping: 30 } },
+      slideIn: { from: { opacity: 0, transform: 'translateX(150px)' }, s: { stiffness: 135, damping: 30 } },
+      spinPop: { from: { opacity: 0, transform: 'rotate(10deg) scale(.3)' }, s: { duration: 0.8, bounce: 0.4 } }
+    };
+    var to = function (from) { var r = {}; for (var p in from) r[p] = p === 'opacity' ? 1 : p === 'filter' ? 'blur(0px)' : 'none'; return r; };
+    var play = function (el, name, delay) {
+      var p = P[name], s = spring(p.s);
+      return el.animate([p.from, to(p.from)], { duration: s.duration, easing: s.easing, delay: (delay || 0) * 1000, fill: 'both' });
+    };
+    var presetOf = function (el) {
+      if (el.hasAttribute('data-anim')) return el.getAttribute('data-anim');
+      if (/^H[1-3]$/.test(el.tagName)) return 'blurIn';
+      if (el.tagName === 'FIGURE' || el.classList.contains('lly-slot-fig')) return 'lift3d';
+      if (el.classList.contains('story-item') || el.classList.contains('tl-item') || el.classList.contains('cap-item') || el.tagName === 'LI') return 'slideIn';
+      return 'riseIn';
+    };
+
+    /* 1. 入场：进入视口只播一次；同一批进入的元素按顺序交错 0.08s，最多 0.5s */
+    if (!reduced) {
+      var targets = $('[data-reveal]').filter(function (el) { return !el.closest('.hero'); });
+      targets.forEach(function (el) { var f = P[presetOf(el)].from; for (var k in f) el.style[k] = f[k]; });
+      var io = new IntersectionObserver(function (entries) {
+        var vis = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+        vis.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+        vis.forEach(function (el, i) {
+          io.unobserve(el);
+          var a = play(el, presetOf(el), Math.min(i * 0.08, 0.5));
+          a.onfinish = function () { el.style.opacity = ''; el.style.transform = ''; el.style.filter = ''; a.cancel(); };
+        });
+      }, { threshold: 0.01 });
+      targets.forEach(function (el) { io.observe(el); });
+      this._cleanup.push(function () { io.disconnect(); });
+
+      var hero = document.querySelector('.hero');
+      if (hero) {
+        $('.hero-kicker, .hero h1, .hero-lede, .hero-actions, .hero-meta', hero).forEach(function (el, i) { play(el, i === 1 ? 'blurIn' : 'riseIn', 0.15 + i * 0.1); });
+        $('.hero-tag', hero).forEach(function (el, i) { play(el, 'spinPop', 0.9 + i * 0.25); });
+        var hi = hero.querySelector('img.main');
+        if (hi) hi.animate([{ opacity: 0, filter: 'grayscale(1) blur(10px)', transform: 'scale(1.18)' }, { opacity: 1, filter: 'grayscale(0) blur(0px)', transform: 'scale(1.04)' }], { duration: 1800, easing: 'cubic-bezier(.12,.23,.5,1)', fill: 'backwards' });
+      }
+    }
+
+    /* 2. 数字计数 */
+    var counters = $('[data-count]');
+    if (!reduced && counters.length) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          cio.unobserve(e.target);
+          var el = e.target, end = parseFloat(el.getAttribute('data-count'));
+          var from = parseFloat(el.getAttribute('data-from') || '0'), dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+          var t0 = performance.now(), dur = 1800;
+          (function tick(now) {
+            var t = Math.min(1, (now - t0) / dur), k = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            el.textContent = (from + (end - from) * k).toFixed(dec);
+            if (t < 1) requestAnimationFrame(tick);
+          })(t0);
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(function (c) { c.textContent = parseFloat(c.getAttribute('data-from') || '0').toFixed(parseInt(c.getAttribute('data-dec') || '0', 10)); cio.observe(c); });
+      this._cleanup.push(function () { cio.disconnect(); });
+    }
+
+    /* 3. 逐字点亮 */
+    var groups = [];
+    $('.lly-hl').forEach(function (s) { var g = s.parentElement; if (groups.indexOf(g) < 0) groups.push(g); });
+    if (reduced) $('.lly-hl').forEach(function (s) { s.classList.add('is-lit'); });
+    else if (!inner) {
+      /* 外层滚动时拿不到本页的滚动位置：进入视口后按阅读速度逐字点亮 */
+      var hio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting || e.intersectionRatio < 0.5) return;
+          hio.unobserve(e.target);
+          $('.lly-hl', e.target).forEach(function (s, i) { setTimeout(function () { s.classList.add('is-lit'); }, 300 + i * 38); });
+        });
+      }, { threshold: [0, 0.5, 1] });
+      groups.forEach(function (g) { hio.observe(g); });
+      this._cleanup.push(function () { hio.disconnect(); });
+    }
+
+    /* 4. 首屏：下面的内容滑上来盖住它（固定 + 变暗 + 视差） */
+    var heroEl = document.querySelector('.hero');
+    var dim = document.querySelector('[data-hero-dim]');
+    var heroImg = heroEl ? heroEl.querySelector('img.main') : null;
+    var header = document.querySelector('.site-header');
+    var applyHero = function (p) {
+      if (dim) dim.style.opacity = (p * 0.6).toFixed(3);
+      if (heroImg) heroImg.style.transform = 'translateY(' + (p * 8).toFixed(2) + '%) scale(' + (1.04 + 0.08 * p).toFixed(4) + ')';
+    };
+    if (heroEl && !reduced && !inner) {
+      /* 外层滚动：用可见比例推算滚出了多少，把首屏往下推，模拟“钉住” */
+      var th = []; for (var i = 0; i <= 50; i++) th.push(i / 50);
+      var pio = new IntersectionObserver(function (es) {
+        var e = es[es.length - 1], h = e.boundingClientRect.height || 1;
+        var leavingTop = e.intersectionRect.height < h && Math.abs(e.intersectionRect.bottom - e.boundingClientRect.bottom) < 2;
+        var out = leavingTop ? (h - e.intersectionRect.height) : 0;
+        heroEl.style.transform = 'translateY(' + (out * 0.82).toFixed(1) + 'px)';
+        applyHero(Math.min(1, out / h));
+      }, { threshold: th });
+      pio.observe(heroEl);
+      this._cleanup.push(function () { pio.disconnect(); });
+    }
+
+    /* 6. 鼠标反馈：跟随光标的圆环、首屏视差、卡片倾斜、按钮磁吸；顶部滚动进度条 */
+    var bar = document.querySelector('.lly-progress');
+    var fine = !window.matchMedia || window.matchMedia('(pointer: fine)').matches;
+    if (fine) {
+      var cur = document.querySelector('.lly-cursor');
+      var mx = -200, my = -200, cx = -200, cy = -200, alive = true;
+      var onMove = function (e) { mx = e.clientX; my = e.clientY; if (cur) cur.style.opacity = '1'; };
+      var onOver = function (e) {
+        var t = e.target && e.target.closest ? e.target.closest('a, button, figure, .story-item, .cap-item, .proj-row, .lly-kpis > div') : null;
+        if (cur) cur.classList.toggle('is-big', !!t);
+      };
+      var onOut = function (e) { if (!e.relatedTarget && cur) cur.style.opacity = '0'; };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseover', onOver);
+      document.addEventListener('mouseout', onOut);
+      (function loop() {
+        if (!alive) return;
+        cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
+        if (cur) cur.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0) translate(-50%,-50%)';
+        requestAnimationFrame(loop);
+      })();
+      this._cleanup.push(function () { alive = false; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseover', onOver); document.removeEventListener('mouseout', onOut); });
+
+      var heroBox = document.querySelector('.hero-visual');
+      var heroPic = heroBox ? heroBox.querySelector('img.main') : null;
+      if (heroBox && heroPic) {
+        heroBox.addEventListener('mousemove', function (e) {
+          var r = heroBox.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          heroPic.style.translate = (dx * -28).toFixed(1) + 'px ' + (dy * -20).toFixed(1) + 'px';
+          $('.hero-tag', heroBox).forEach(function (t, i) { t.style.translate = (dx * (18 + i * 10)).toFixed(1) + 'px ' + (dy * (14 + i * 8)).toFixed(1) + 'px'; });
+        });
+        heroBox.addEventListener('mouseleave', function () { heroPic.style.translate = ''; $('.hero-tag', heroBox).forEach(function (t) { t.style.translate = ''; }); });
+      }
+
+      $('.case-figure, .lly-slot-fig, .story-item, .lly-kpis > div, .thumb-strip figure').forEach(function (el) {
+        el.style.transition = 'transform .5s cubic-bezier(.12,.23,.5,1)';
+        el.addEventListener('mousemove', function (e) {
+          var r = el.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transition = 'transform .12s linear';
+          el.style.transform = 'perspective(900px) rotateX(' + (dy * -7).toFixed(2) + 'deg) rotateY(' + (dx * 9).toFixed(2) + 'deg) translateZ(0)';
+        });
+        el.addEventListener('mouseleave', function () { el.style.transition = 'transform .6s cubic-bezier(.34,1.56,.64,1)'; el.style.transform = ''; });
+      });
+
+      $('.btn, .case-link').forEach(function (b) {
+        b.addEventListener('mousemove', function (e) {
+          var r = b.getBoundingClientRect();
+          b.style.translate = ((e.clientX - r.left - r.width / 2) * 0.25).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + 'px';
+        });
+        b.addEventListener('mouseleave', function () { b.style.translate = ''; });
+      });
+    }
+    var raf = 0;
+    var update = function () {
+      raf = 0;
+      if (bar) { var max = Math.max(1, docEl.scrollHeight - window.innerHeight); bar.style.transform = 'scaleX(' + Math.min(1, (window.scrollY || docEl.scrollTop || 0) / max).toFixed(4) + ')'; }
+      if (!inner) return;
+      var vh = window.innerHeight || 800;
+      if (heroEl && !reduced) {
+        var hh = header ? header.offsetHeight : 0;
+        heroEl.style.top = Math.min(hh, vh - heroEl.offsetHeight) + 'px';
+        applyHero(Math.max(0, Math.min(1, (window.scrollY || docEl.scrollTop || 0) / Math.max(1, heroEl.offsetHeight))));
+      }
+      if (!reduced) {
+        var line = vh * 0.62;
+        $('.lly-hl').forEach(function (s) { var lit = s.getBoundingClientRect().top < line; if (lit !== s.classList.contains('is-lit')) s.classList.toggle('is-lit', lit); });
+      }
+    };
+    var onScroll = function () { if (!raf) raf = requestAnimationFrame(update); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    this._cleanup.push(function () { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); if (raf) cancelAnimationFrame(raf); });
+    update();
+
+    /* 5. 项目列表悬停预览（原站功能） */
+    var list = document.getElementById('proj-list');
+    var preview = document.getElementById('hover-preview');
+    if (list && preview && window.matchMedia('(pointer: fine)').matches && !reduced) {
+      var pimg = preview.querySelector('img'), mx = 0, my = 0, pr = 0;
+      var place = function () { pr = 0; var w = preview.offsetWidth, h = preview.offsetHeight, x = mx + 28, y = my - h / 2; if (x + w > window.innerWidth - 16) x = mx - w - 28; y = Math.max(12, Math.min(window.innerHeight - h - 12, y)); preview.style.left = x + 'px'; preview.style.top = y + 'px'; };
+      list.querySelectorAll('.proj-row').forEach(function (row) {
+        row.addEventListener('mouseenter', function () { var src = row.getAttribute('data-preview'); if (src && pimg) pimg.setAttribute('src', src); preview.classList.add('on'); });
+        row.addEventListener('mouseleave', function () { preview.classList.remove('on'); });
+      });
+      list.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; if (!pr) pr = requestAnimationFrame(place); });
+    }
+  }
+  componentWillUnmount() {
+    clearTimeout(this._t);
+    (this._cleanup || []).forEach(function (f) { f(); });
+  }
+  renderVals() {
+    var split = function (text, keys) {
+      var mask = [];
+      for (var i = 0; i < text.length; i++) mask.push('0');
+      keys.forEach(function (k) {
+        for (var s = text.indexOf(k); s > -1; s = text.indexOf(k, s + 1)) for (var j = s; j < s + k.length; j++) mask[j] = '1';
+      });
+      return text.split('').map(function (ch, i) { return { ch: ch, key: mask[i] }; });
+    };
+    var ticker = ['FACE SDF', 'WARP SSS', 'HAIR ANISO', 'FUR POM', 'SHELL OUTLINE', 'PER-OBJECT SHADOW', 'SVE + RDG PASS', 'DEFERRED SHADING', 'VSM', 'JSON SCHEMA', 'BLENDER ADD-ON', 'UE EDITOR PYTHON'];
+    return {
+      toggleMenu: this.toggleMenu,
+      tickerItems: ticker.concat(ticker),
+      intro1: split('这个站里的每张图都来自可运行的工程，不是摆拍。我习惯把每个效果拆到「能解释、能复现、能继续优化」为止——所以你会看到很多对比图、调试视图和性能数字，而不是只有精修成片。', ['能解释', '能复现', '能继续优化']),
+      intro2: split('如果哪一段你想看完整的推理过程，点进案例页，我把踩过的坑也写进去了。', ['完整的推理过程', '踩过的坑'])
+    };
+  }
+}
+</script>
+</body>
+</html>

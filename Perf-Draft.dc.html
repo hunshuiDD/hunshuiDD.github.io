@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&amp;family=Geist+Mono:wght@400;500;700&amp;family=Noto+Sans+SC:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #f4f2eb; }
+  a { color: #121310; text-decoration: none; }
+  a:hover { color: #f06432; }
+  img { max-width: 100%; }
+  :focus-visible { outline: 3px solid #f06432; outline-offset: 4px; }
+  @media (max-width: 900px) {
+    [data-grid="metrics"], [data-grid="head"] { grid-template-columns: 1fr !important; gap: 30px !important; }
+    table { font-size: 12px !important; }
+  }
+</style>
+</helmet>
+
+<div style="font-family: Geist, 'Noto Sans SC', sans-serif; color: #121310; background: #f4f2eb; min-height: 100vh;">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; padding: 0 clamp(20px, 4vw, 56px); border-bottom: 1px solid #a7aaa2; font: 700 11px 'Geist Mono', monospace; letter-spacing: .12em;">
+    <a href="Case-CelShading.dc.html" style="display: flex; align-items: center; gap: 12px;">← 返回案例</a>
+    <span style="display: inline-flex; align-items: center; min-height: 25px; padding: 0 9px; border: 1px dashed #7f5151; color: #7f5151;">内部草稿 · 未发布</span>
+  </header>
+
+  <main style="max-width: 1180px; margin: 0 auto; padding: 72px clamp(20px, 4vw, 56px) 100px;">
+    <div data-grid="head" style="display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: end; padding-bottom: 18px; border-bottom: 1px solid #121310;">
+      <span style="color: #f06432; font: 700 clamp(34px, 4.6vw, 66px)/.85 'Geist Mono', monospace;">06</span>
+      <div>
+        <p style="margin: 0 0 10px; color: #62665f; font: 700 11px 'Geist Mono', monospace; letter-spacing: .16em;">PERFORMANCE / 待补实测</p>
+        <h1 style="margin: 0; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: clamp(30px, 3.6vw, 54px); font-weight: 900; line-height: 1.06; letter-spacing: -.04em;">性能优化（还待优化）</h1>
+      </div>
+    </div>
+
+    <p style="max-width: 900px; margin: 30px 0 0; color: #40443e; font-size: 16px; line-height: 1.9;">开关和分档已经在代码里落地，缺的是数字。测量方案与表格结构先立在这里，实测完逐格填入——空着也比写一个估算值诚实。这一节暂不发布到对外页面。</p>
+
+    <table style="width: 100%; margin-top: 36px; border-collapse: collapse; font-size: 13px; line-height: 1.6;">
+      <thead>
+        <tr>
+          <th style="padding: 12px 10px 12px 0; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">档位</th>
+          <th style="padding: 12px 10px; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">关掉了什么</th>
+          <th style="width: 92px; padding: 12px 10px; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">GPU 帧时</th>
+          <th style="width: 92px; padding: 12px 10px; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">较高档节省</th>
+          <th style="padding: 12px 0; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">目标场景</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace;">High</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #40443e;">全开</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #7f5151;">待实测</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #7f5151;">—</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2; color: #40443e;">近景、作品展示</td>
+        </tr>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace;">Mid</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #40443e;">SSR 关闭；POM 采样减半；自阴影降频</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #7f5151;">待实测</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #7f5151;">待实测</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2; color: #40443e;">常规游玩</td>
+        </tr>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace;">Low</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #40443e;">内外描边、GTAO、Fur POM 全关</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #7f5151;">待实测</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; color: #7f5151;">待实测</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2; color: #40443e;">远景、低配</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin: 14px 0 0; color: #62665f; font-size: 13px; line-height: 1.7;">测试条件（待定稿）：1920×1080 ／ 固定镜头 03:02 段 ／ 单角色 ／ 同一场景光照。</p>
+
+    <h2 style="margin: 64px 0 6px; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: 26px;">贵特性与分档开关 ／ 已在代码里落地</h2>
+    <p style="margin: 0; color: #62665f; font-size: 13px; line-height: 1.7;">只列实测有明显差异的项</p>
+    <table style="width: 100%; margin-top: 22px; border-collapse: collapse; font-size: 13px; line-height: 1.6;">
+      <thead>
+        <tr>
+          <th style="padding: 12px 10px 12px 0; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">贵特性</th>
+          <th style="padding: 12px 10px; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">开关字段</th>
+          <th style="width: 70px; padding: 12px 10px; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">High</th>
+          <th style="width: 70px; padding: 12px 10px; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">Mid</th>
+          <th style="width: 70px; padding: 12px 0; border-bottom: 1px solid #121310; text-align: left; font: 700 10px 'Geist Mono', monospace; letter-spacing: .12em; color: #62665f;">Low</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2;">壳层外描边</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace; color: #40443e; word-break: break-word;">bUseShellOutline ／ 描边 Mesh 可见性</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">开</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">开</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2;">关</td>
+        </tr>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2;">屏幕空间内描边</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace; color: #40443e; word-break: break-word;">bEnableInnerLine ／ RemoveBlendable 摘 pass</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">开</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">开</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2;">关</td>
+        </tr>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2;">SSR 屏幕空间反射</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace; color: #40443e; word-break: break-word;">bEnableSSR ／ r.SSR.Quality</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">开 (3)</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">关 (0)</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2;">关 (0)</td>
+        </tr>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2;">GTAO 环境光遮蔽</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace; color: #40443e; word-break: break-word;">bEnableGTAO ／ r.AmbientOcclusionLevels</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">开 (1)</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">开 (1)</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2;">关 (0)</td>
+        </tr>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2;">视差毛 Fur POM</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace; color: #40443e; word-break: break-word;">FurParallaxSampleCount → MCP_CharaterRuning</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">32</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">16</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2;">0</td>
+        </tr>
+        <tr>
+          <td style="padding: 13px 10px 13px 0; border-bottom: 1px solid #a7aaa2;">脸部阴影软度</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2; font-family: 'Geist Mono', monospace; color: #40443e; word-break: break-word;">FaceShadowSoftness → MPC_CharacterLighting</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">0.35</td>
+          <td style="padding: 13px 10px; border-bottom: 1px solid #a7aaa2;">0.40</td>
+          <td style="padding: 13px 0; border-bottom: 1px solid #a7aaa2;">0.50</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div data-grid="metrics" style="display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 56px;">
+      <figure style="margin: 0;">
+        <div style="position: relative; aspect-ratio: 16/9; overflow: hidden; border: 6px solid #e2dfd6; outline: 1px solid #a7aaa2; background: #242724;">
+          <img src="assets/2346896766470e73ba5b26090fa02546.webp" alt="着色复杂度视图 · High 档" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <figcaption style="margin-top: 10px; color: #62665f; font-size: 13px; line-height: 1.6;">Shader Complexity · 描边与 POM 全开</figcaption>
+      </figure>
+      <figure style="margin: 0;">
+        <div style="position: relative; aspect-ratio: 16/9; overflow: hidden; border: 6px solid #e2dfd6; outline: 1px solid #a7aaa2; background: #242724;">
+          <img src="assets/37c666032316ff7b02d899a710655219.webp" alt="着色复杂度视图 · 降档" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <figcaption style="margin-top: 10px; color: #62665f; font-size: 13px; line-height: 1.6;">Shader Complexity · 降档后同镜头对照</figcaption>
+      </figure>
+    </div>
+
+    <div style="margin-top: 40px; padding: 26px; background: #121310; color: #ffffff;">
+      <h2 style="margin: 0 0 14px; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: 20px;">下一步验证计划</h2>
+      <ol style="margin: 0; padding-left: 22px; color: #c8ccc5; line-height: 1.9;">
+        <li>固定镜头 + 固定分辨率下录制 ProfileGPU，记录引擎版本与硬件。</li>
+        <li>用 RenderDoc 抓帧核对描边与自阴影通道的实际开销。</li>
+        <li>把结果写回质量数据资产的分档建议，再更新案例页验证层级。</li>
+      </ol>
+    </div>
+  </main><div style="margin-top: 24px; padding: 18px 20px; border-left: 3px solid #f06432; background: #e7e3d9;">
+            <span style="display: block; margin-bottom: 8px; font: 700 10px 'Geist Mono', monospace; letter-spacing: .14em; color: #62665f;">下一步验证计划</span>
+            <span style="display: block; color: #40443e; font-size: 14px; line-height: 1.8;">固定镜头、固定分辨率下录制 ProfileGPU，记录引擎版本与硬件；用 RenderDoc 抓帧核对描边与自阴影通道的实际开销；把结果写回质量数据资产的分档建议，再更新本页验证层级。</span>
+          </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3600}}'>
+class Component extends DCLogic {
+  /* ---- 动效层（与首页同一套参数：弹簧入场、数字计数、光标圆环、图片倾斜、按钮磁吸、滚动进度） ---- */
+  _llyStart() {
+    var self = this;
+    this._llyClean = [];
+    this._llyT = setTimeout(function () { self._llyMotion(); }, 30);
+  }
+  _llyStop() {
+    clearTimeout(this._llyT);
+    (this._llyClean || []).forEach(function (f) { f(); });
+  }
+  _llyMotion() {
+    var clean = this._llyClean, ACC = '#f06432';
+    var $ = function (q, r) { return Array.prototype.slice.call((r || document).querySelectorAll(q)); };
+    var docEl = document.scrollingElement || document.documentElement;
+    var vh = Math.min(window.innerHeight || 900, 1100);
+    var spring = function (o) {
+      var k, c;
+      if (o.duration != null) { var z = 1 - o.bounce, w = 2 * Math.PI / o.duration; k = w * w; c = 2 * z * Math.sqrt(k); }
+      else { k = o.stiffness; c = o.damping; }
+      var x = 0, v = 0, dt = 1 / 240, t = 0, pts = [0], i = 0;
+      while (t < 4) { var a = -k * (x - 1) - c * v; v += a * dt; x += v * dt; t += dt; i++; if (i % 4 === 0) pts.push(+x.toFixed(4)); if (Math.abs(1 - x) < 0.0005 && Math.abs(v) < 0.005) break; }
+      pts.push(1);
+      return { easing: 'linear(' + pts.join(',') + ')', duration: Math.round(t * 1000) };
+    };
+    var P = {
+      riseIn: { from: { opacity: 0, transform: 'translateY(64px)' }, s: { stiffness: 100, damping: 30 } },
+      blurIn: { from: { opacity: 0, transform: 'translateY(24px)', filter: 'blur(14px)' }, s: { stiffness: 100, damping: 30 } },
+      lift3d: { from: { opacity: 0, transform: 'perspective(1200px) translateY(40px) scale(.9) rotateX(8deg)' }, s: { stiffness: 220, damping: 30 } },
+      slideIn: { from: { opacity: 0, transform: 'translateX(80px)' }, s: { stiffness: 135, damping: 30 } }
+    };
+    var to = function (from, el) { var cs = getComputedStyle(el), r = {}; for (var p in from) r[p] = p === 'opacity' ? 1 : p === 'filter' ? (cs.filter === 'none' ? 'blur(0px)' : cs.filter) : (cs.transform === 'none' ? 'none' : cs.transform); return r; };
+
+    /* 1. 入场：把页面切成不高于一屏的块，进入视口时按顺序弹入 */
+    var root = document.body;
+    var skip = function (el) {
+      var tag = el.tagName;
+      if (/^(SCRIPT|STYLE|DIALOG|TEMPLATE|BR|HEADER|NAV)$/.test(tag)) return true;
+      var cs = getComputedStyle(el);
+      return cs.position === 'fixed' || cs.position === 'sticky' || cs.position === 'absolute' || cs.display === 'none' || el.offsetHeight < 4;
+    };
+    var targets = [];
+    (function collect(box, depth) {
+      Array.prototype.forEach.call(box.children, function (el) {
+        if (skip(el)) return;
+        if (el.offsetHeight > vh * 0.6 && el.children.length && depth < 6) collect(el, depth + 1);
+        else targets.push(el);
+      });
+    })(root, 0);
+    var presetOf = function (el) {
+      if (/^H[1-3]$/.test(el.tagName) || el.querySelector(':scope > h1, :scope > h2') && el.children.length <= 3) return 'blurIn';
+      if (el.tagName === 'FIGURE' || el.tagName === 'IMG' || (el.querySelector('img') && el.offsetHeight > 120)) return 'lift3d';
+      if (el.tagName === 'LI') return 'slideIn';
+      return 'riseIn';
+    };
+    var io = new IntersectionObserver(function (entries) {
+      var vis = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+      vis.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+      vis.forEach(function (el, i) {
+        io.unobserve(el);
+        if (el._llyHold) { el._llyHold.cancel(); el._llyHold = null; }
+        var p = P[el._llyP], s = spring(p.s);
+        var a = el.animate([p.from, el._llyTo], { duration: s.duration, easing: s.easing, delay: Math.min(i * 0.08, 0.5) * 1000, fill: 'both' });
+        a.onfinish = function () { a.cancel(); };
+      });
+    }, { threshold: 0.01 });
+    targets.forEach(function (el) {
+      el._llyP = presetOf(el);
+      el._llyTo = to(P[el._llyP].from, el);
+      /* 未进入视口前先停在起始帧（不改内联样式，避免和页面自身样式冲突） */
+      el._llyHold = el.animate([P[el._llyP].from, P[el._llyP].from], { duration: 1, fill: 'forwards' });
+      io.observe(el);
+    });
+    /* 打印 / 导出 PDF 前把所有入场动画结束掉，避免还没滚到的块是透明的 */
+    var onPrint = function () { targets.forEach(function (el) { io.unobserve(el); el._llyHold = null; el.getAnimations().forEach(function (a) { a.cancel(); }); }); };
+    window.addEventListener('beforeprint', onPrint);
+    clean.push(function () { window.removeEventListener('beforeprint', onPrint); });
+    clean.push(function () { io.disconnect(); targets.forEach(function (el) { if (el._llyHold) el._llyHold.cancel(); }); });
+
+    /* 2. 数字计数：只处理纯数字（可带 % × +）的小元素 */
+    var nums = $('strong, b, span, em, small, td, div', root).filter(function (el) {
+      if (el.children.length || el.closest('header, nav, footer')) return false;
+      var m = (el.textContent || '').trim().match(/^(\d+(?:\.\d+)?)([%×x+]?)$/);
+      if (!m || /^0\d/.test(m[1])) return false;
+      var v = parseFloat(m[1]);
+      if (!v || (v >= 1900 && v < 2100 && m[1].indexOf('.') < 0)) return false;
+      el._llyN = { end: v, dec: (m[1].split('.')[1] || '').length, suf: m[2] };
+      return true;
+    });
+    if (nums.length) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          cio.unobserve(e.target);
+          var el = e.target, n = el._llyN, t0 = performance.now(), dur = 1600;
+          (function tick(now) {
+            var t = Math.min(1, (now - t0) / dur), k = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            el.textContent = (n.end * k).toFixed(n.dec) + n.suf;
+            if (t < 1) requestAnimationFrame(tick);
+          })(t0);
+        });
+      }, { threshold: 0.6 });
+      nums.forEach(function (el) { cio.observe(el); });
+      clean.push(function () { cio.disconnect(); nums.forEach(function (el) { var n = el._llyN; el.textContent = n.end.toFixed(n.dec) + n.suf; }); });
+    }
+
+    /* 3. 顶部滚动进度条（页面自带进度条时不重复加） */
+    var bar = null;
+    if (!document.querySelector('[data-case-progress]')) {
+      bar = document.createElement('div');
+      bar.setAttribute('aria-hidden', 'true');
+      bar.style.cssText = 'position:fixed;left:0;top:0;right:0;height:3px;background:' + ACC + ';transform-origin:0 50%;transform:scaleX(0);z-index:9998;pointer-events:none';
+      document.body.appendChild(bar);
+      var raf = 0;
+      var upd = function () { raf = 0; var max = Math.max(1, docEl.scrollHeight - window.innerHeight); bar.style.transform = 'scaleX(' + Math.min(1, (window.scrollY || docEl.scrollTop || 0) / max).toFixed(4) + ')'; };
+      var onScroll = function () { if (!raf) raf = requestAnimationFrame(upd); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      upd();
+      clean.push(function () { window.removeEventListener('scroll', onScroll); bar.remove(); });
+    }
+
+    /* 4. 鼠标反馈：光标圆环、图片倾斜、箭头链接磁吸 */
+    if (window.matchMedia && !window.matchMedia('(pointer: fine)').matches) return;
+    var cur = document.createElement('div');
+    cur.setAttribute('aria-hidden', 'true');
+    cur.style.cssText = 'position:fixed;left:0;top:0;width:34px;height:34px;border:1.5px solid ' + ACC + ';border-radius:50%;pointer-events:none;z-index:9999;opacity:0;transition:width .35s cubic-bezier(.34,1.56,.64,1),height .35s cubic-bezier(.34,1.56,.64,1),background-color .3s,opacity .3s;mix-blend-mode:multiply';
+    document.body.appendChild(cur);
+    var mx = -200, my = -200, cx = -200, cy = -200, alive = true;
+    var onMove = function (e) { mx = e.clientX; my = e.clientY; cur.style.opacity = '1'; };
+    var onOver = function (e) {
+      var t = e.target && e.target.closest ? e.target.closest('a, button, summary, [role="button"], figure, img') : null;
+      cur.style.width = cur.style.height = t ? '76px' : '34px';
+      cur.style.backgroundColor = t ? 'rgba(240,100,50,.14)' : 'transparent';
+    };
+    var onOut = function (e) { if (!e.relatedTarget) cur.style.opacity = '0'; };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseover', onOver);
+    document.addEventListener('mouseout', onOut);
+    (function loop() {
+      if (!alive) return;
+      cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
+      cur.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    })();
+    clean.push(function () { alive = false; cur.remove(); document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseover', onOver); document.removeEventListener('mouseout', onOut); });
+
+    var frames = [];
+    $('img', root).forEach(function (img) {
+      var f = img.closest('figure') || img.parentElement;
+      if (f && f !== root && frames.indexOf(f) < 0 && f.offsetWidth > 120) frames.push(f);
+    });
+    frames.forEach(function (el) {
+      var big = el.offsetWidth > 900 ? 0.35 : 1;
+      var mv = function (e) {
+        var r = el.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transition = 'transform .12s linear';
+        el.style.transform = ('perspective(900px) rotateX(' + (dy * -7 * big).toFixed(2) + 'deg) rotateY(' + (dx * 9 * big).toFixed(2) + 'deg)');
+      };
+      var lv = function () { el.style.transition = 'transform .6s cubic-bezier(.34,1.56,.64,1)'; el.style.transform = ''; };
+      el.addEventListener('mousemove', mv);
+      el.addEventListener('mouseleave', lv);
+      clean.push(function () { el.removeEventListener('mousemove', mv); el.removeEventListener('mouseleave', lv); });
+    });
+
+    $('a, button', root).filter(function (b) { return /→|↗/.test(b.textContent || '') && b.offsetWidth < 420; }).forEach(function (b) {
+      var mv = function (e) { var r = b.getBoundingClientRect(); b.style.translate = ((e.clientX - r.left - r.width / 2) * 0.25).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + 'px'; };
+      var lv = function () { b.style.translate = ''; };
+      if (!b.style.transition) b.style.transition = 'translate .45s cubic-bezier(.34,1.56,.64,1)';
+      b.addEventListener('mousemove', mv);
+      b.addEventListener('mouseleave', lv);
+      clean.push(function () { b.removeEventListener('mousemove', mv); b.removeEventListener('mouseleave', lv); });
+    });
+  }
+
+  componentWillUnmount() { this._llyStop(); }
+  componentDidMount() { this._llyStart(); }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

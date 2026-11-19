@@ -101,7 +101,7 @@ html, body { overflow-x: clip; }
           <a href="#materials" style="padding: 15px 18px; border-bottom: 1px solid #a7aaa2;">材质</a>
           <a href="#runtime" style="padding: 15px 18px; border-bottom: 1px solid #a7aaa2;">运行时</a>
           <a href="#pipeline" style="padding: 15px 18px; border-bottom: 1px solid #a7aaa2;">管线扩展</a>
-          <a href="#restore" style="padding: 15px 18px; border-bottom: 1px solid #a7aaa2;">还原</a>
+          <a href="#restore" style="padding: 15px 18px; border-bottom: 1px solid #a7aaa2;">角色</a>
           <a href="#lessons" style="padding: 15px 18px; border-bottom: 1px solid #a7aaa2;">纠错</a>
           <a href="#evidence" style="padding: 15px 18px;">证据</a>
         </nav>
@@ -119,7 +119,7 @@ html, body { overflow-x: clip; }
     <a href="#materials" data-case-target="materials">材质</a>
     <a href="#runtime" data-case-target="runtime">运行时</a>
     <a href="#pipeline" data-case-target="pipeline">管线扩展</a>
-    <a href="#restore" data-case-target="restore">还原</a>
+    <a href="#restore" data-case-target="restore">角色</a>
     <a href="#lessons" data-case-target="lessons">纠错</a>
     <a href="#evidence" data-case-target="evidence">证据</a>
   </nav>
@@ -222,7 +222,7 @@ html, body { overflow-x: clip; }
       <a href="#materials" style="color: #62665f; line-height: 1.4;">05 材质</a>
       <a href="#runtime" style="color: #62665f; line-height: 1.4;">06 运行时</a>
       <a href="#pipeline" style="color: #62665f; line-height: 1.4;">07 管线扩展</a>
-      <a href="#restore" style="color: #62665f; line-height: 1.4;">08 还原</a>
+      <a href="#restore" style="color: #62665f; line-height: 1.4;">08 角色</a>
       <a href="#lessons" style="color: #62665f; line-height: 1.4;">09 纠错</a>
       <a href="#evidence" style="color: #62665f; line-height: 1.4;">10 证据</a>
     </aside>
@@ -273,7 +273,7 @@ html, body { overflow-x: clip; }
         </div>
         <ul style="max-width: 900px; margin: 28px 0 0; padding: 0; list-style: none; color: #40443e; font-size: 15px; line-height: 1.75; border-top: 1px solid #a7aaa2;">
           <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">瓶颈在渲染线程：Draw 20.86 ms、Frame 19.12 ms，GPU 只有 11.33 ms。</li>
-          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">截帧确认同一帧重建了两次加速结构：自阴影采集视图一次、主视图一次。</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">RenderDoc 确认同一帧重建了两次加速结构：自阴影采集视图一次、主视图一次。</li>
           <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">降到 720p 省下 5–6 ms GPU，帧率不涨——判断优化看 Draw，不看 GPU。</li>
           <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">另有五条看似有效的优化被实测否掉，没有采用。</li>
         </ul>
@@ -611,18 +611,17 @@ html, body { overflow-x: clip; }
         <div style="display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: end; padding-bottom: 18px; border-bottom: 1px solid #121310;">
           <span style="color: #f06432; font: 700 clamp(34px, 4.6vw, 66px)/.85 'Geist Mono', monospace;">08</span>
           <div>
-            <p style="margin: 0 0 10px; color: #62665f; font: 700 11px 'Geist Mono', monospace; letter-spacing: .16em;">RESTORATION / 逆向还原</p>
-            <h2 style="margin: 0; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: clamp(30px, 3.6vw, 54px); font-weight: 900; line-height: 1.06; letter-spacing: -.04em;">对照原作，逐部位还原</h2>
+            <p style="margin: 0 0 10px; color: #62665f; font: 700 11px 'Geist Mono', monospace; letter-spacing: .16em;">CHARACTER / 角色渲染</p>
+            <h2 style="margin: 0; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: clamp(30px, 3.6vw, 54px); font-weight: 900; line-height: 1.06; letter-spacing: -.04em;">逐部位搭建角色渲染</h2>
           </div>
         </div>
-        <p style="max-width: 900px; margin: 30px 0 0; color: #40443e; font-size: 16px; line-height: 1.9;">对照原作，把角色渲染逐部位还原到 UE 5.8。</p>
+        <p style="max-width: 900px; margin: 30px 0 0; color: #40443e; font-size: 16px; line-height: 1.9;">把角色渲染按部位拆开，在 UE 5.8 里逐个实现。</p>
 
         <ul style="max-width: 900px; margin: 28px 0 0; padding: 0; list-style: none; color: #40443e; font-size: 15px; line-height: 1.75; border-top: 1px solid #a7aaa2;">
           <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">头发、脸、身体、毛、眼、外描边，一个部位一个母材质。</li>
-          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">公式和参数分开：公式手写，参数由原作数据自动生成，可反复重跑。</li>
-          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">每处改动都和原作同阶段画面对比。10 月底审计时，第一形态头发和上衣、第二形态头发和下摆的暗部与亮部比值，和原作相差在 ±0.1 以内；这组数据早于下面的暗部改造。</li>
-          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">暗部接入环境层：脸、头发、身体的暗部不再用写死的颜色，改读场景天光，只留风格增益。脸部暗部不再发紫。头发同一像素背光 ÷ 正面光从 (0.49, 0.42, 0.54) 变为 (0.59, 0.48, 0.56)，原作是 (0.62, 0.64, 0.74)：更接近了，绿、蓝两个通道仍然偏低。</li>
-          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">刘海投影跟光：原来的偏移是截帧里的单帧常量，投影几乎不动。现在水平方向按光向偏移 0.6 cm（风格值，原作是否逐帧更新尚不清楚）。7 个太阳角度实测，投影重心的水平范围从 431–447 px 扩大到 391–562 px。</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">公式和参数分开：公式手写，参数由脚本批量生成，可反复重跑。</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">暗部接入环境层：脸、头发、身体的暗部不再用写死的颜色，改读场景天光，只留风格增益。脸部暗部不再发紫。头发同一像素背光 ÷ 正面光从 (0.49, 0.42, 0.54) 变为 (0.59, 0.48, 0.56)。</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">刘海投影跟光：原来的偏移是固定常量，投影几乎不动。现在水平方向按光向偏移 0.6 cm（风格值）。7 个太阳角度实测，投影重心的水平范围从 431–447 px 扩大到 391–562 px。</li>
           <li style="padding: 12px 0; border-bottom: 1px solid #a7aaa2;">材质参数可读性：276 个参数按中文分组、排序，并逐项写明含义和来源，头发从 30 多组收到 7 组；参数名和默认值不变，脚本检查缺失为 0。</li>
         </ul>
         <div style="display: grid; gap: 22px; margin-top: 40px;">
@@ -631,30 +630,10 @@ html, body { overflow-x: clip; }
             <figcaption style="margin-top: 10px; color: #62665f; font-size: 13px; line-height: 1.6;">UE 5.8 Sequencer 成片 ／ 半身慢推 · 面部肖像，各 4 秒，1080p24</figcaption>
           </figure>
           <figure style="margin: 0;">
-            <div style="position: relative; aspect-ratio: 1346/700; overflow: hidden; border: 6px solid #e2dfd6; outline: 1px solid #a7aaa2; background: #242724;">
-              <img src="assets/84ef61e6cea67188043111b323fdb342.jpg" alt="原作与 KuroRe 同阶段对比" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <figcaption style="margin-top: 10px; color: #62665f; font-size: 13px; line-height: 1.6;">原作光照后 ／ KuroRe 后处理前 ／ 原作最终 ／ KuroRe 最终</figcaption>
-          </figure>
-          <div data-grid="split" style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px;">
-          <figure style="margin: 0;">
             <div style="position: relative; aspect-ratio: 1360/660; overflow: hidden; border: 6px solid #e2dfd6; outline: 1px solid #a7aaa2; background: #242724;">
               <img src="assets/c31f4c7e54e8ce51207d52693df32f5d.jpg" alt="刘海高光修复前后" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
             </div>
             <figcaption style="margin-top: 10px; color: #62665f; font-size: 13px; line-height: 1.6;">刘海高光 ／ 修复前 · 修复后</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <div style="position: relative; aspect-ratio: 1600/585; overflow: hidden; border: 6px solid #e2dfd6; outline: 1px solid #a7aaa2; background: #242724;">
-              <img src="assets/1d67bdf535de92fb80da088de46f0958.jpg" alt="胸口原作、修复前、修复后" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <figcaption style="margin-top: 10px; color: #62665f; font-size: 13px; line-height: 1.6;">胸口 ／ 原作 · 修复前 · 修复后</figcaption>
-          </figure>
-          </div>
-          <figure style="margin: 0;">
-            <div style="position: relative; aspect-ratio: 1600/294; overflow: hidden; border: 6px solid #e2dfd6; outline: 1px solid #a7aaa2; background: #242724;">
-              <img src="assets/fba8ecc3c3a4d5ab40d6f2aafcb1ce2d.jpg" alt="头顶光圈原作、修复前、修复后" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <figcaption style="margin-top: 10px; color: #62665f; font-size: 13px; line-height: 1.6;">头顶光圈 ／ 原作 · 修复前 · 修复后</figcaption>
           </figure>
           <figure style="margin: 0;">
             <div style="position: relative; aspect-ratio: 2400/540; overflow: hidden; border: 6px solid #e2dfd6; outline: 1px solid #a7aaa2; background: #242724;">
@@ -751,7 +730,7 @@ html, body { overflow-x: clip; }
           <article style="min-height: 170px; padding: 22px; border: 1px solid #a7aaa2;">
             <span style="display: inline-flex; align-items: center; min-height: 25px; padding: 0 8px; background: #121310; color: #ffffff; font: 700 10px 'Geist Mono', monospace;">可对外宣称</span>
             <h3 style="margin: 20px 0 8px; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: 17px;">固定镜头帧时间 A/B</h3>
-            <p style="margin: 0; color: #62665f; font-size: 13px; line-height: 1.7;">独立进程 stat unit 三档对照 · csvprofile · Unreal Insights · RenderDoc 截帧（见 <a href="#perf" style="border-bottom: 1px solid #a7aaa2;">02 性能</a>）</p>
+            <p style="margin: 0; color: #62665f; font-size: 13px; line-height: 1.7;">独立进程 stat unit 三档对照 · csvprofile · Unreal Insights · RenderDoc（见 <a href="#perf" style="border-bottom: 1px solid #a7aaa2;">02 性能</a>）</p>
           </article>
           <article style="min-height: 170px; padding: 22px; border: 1px solid #a7aaa2;">
             <span style="display: inline-flex; align-items: center; min-height: 25px; padding: 0 8px; background: #121310; color: #ffffff; font: 700 10px 'Geist Mono', monospace;">可对外宣称</span>
@@ -761,12 +740,12 @@ html, body { overflow-x: clip; }
           <article style="min-height: 170px; padding: 22px; border: 1px dashed #7f5151;">
             <span style="display: inline-flex; align-items: center; min-height: 25px; padding: 0 8px; border: 1px dashed #7f5151; color: #7f5151; font: 700 10px 'Geist Mono', monospace;">待验证</span>
             <h3 style="margin: 20px 0 8px; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: 17px;">自阴影采集视图的冗余 Pass</h3>
-            <p style="margin: 0; color: #62665f; font-size: 13px; line-height: 1.7;">截帧显示它只需深度却仍跑 BasePass 与速度 Pass，成本未量化</p>
+            <p style="margin: 0; color: #62665f; font-size: 13px; line-height: 1.7;">RenderDoc 显示它只需深度却仍跑 BasePass 与速度 Pass，成本未量化</p>
           </article>
           <article style="min-height: 170px; padding: 22px; border: 1px solid #a7aaa2;">
             <span style="display: inline-flex; align-items: center; min-height: 25px; padding: 0 8px; border: 1px solid #121310; color: #121310; font: 700 10px 'Geist Mono', 'Noto Sans SC', monospace;">已编辑器验证</span>
             <h3 style="margin: 20px 0 8px; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: 17px;">暗部接环境层 · 刘海投影跟光</h3>
-            <p style="margin: 0; color: #62665f; font-size: 13px; line-height: 1.7;">PIE 多个太阳角度的读数与同机位截图（见 <a href="#restore" style="border-bottom: 1px solid #a7aaa2;">08 还原</a>）；第二形态观感与 GPU 成本未测</p>
+            <p style="margin: 0; color: #62665f; font-size: 13px; line-height: 1.7;">PIE 多个太阳角度的读数与同机位截图（见 <a href="#restore" style="border-bottom: 1px solid #a7aaa2;">08 角色</a>）；第二形态观感与 GPU 成本未测</p>
           </article>
           <article style="min-height: 170px; padding: 22px; border: 1px solid #a7aaa2;">
             <span style="display: inline-flex; align-items: center; min-height: 25px; padding: 0 8px; border: 1px solid #121310; color: #121310; font: 700 10px 'Geist Mono', 'Noto Sans SC', monospace;">已编辑器验证</span>
@@ -785,7 +764,7 @@ html, body { overflow-x: clip; }
           </article>
           <article style="min-height: 170px; padding: 22px; border: 1px dashed #7f5151;">
             <span style="display: inline-flex; align-items: center; min-height: 25px; padding: 0 8px; border: 1px dashed #7f5151; color: #7f5151; font: 700 10px 'Geist Mono', monospace;">待验证</span>
-            <h3 style="margin: 20px 0 8px; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: 17px;">还原版的 GPU 成本</h3>
+            <h3 style="margin: 20px 0 8px; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: 17px;">角色材质的 GPU 成本</h3>
             <p style="margin: 0; color: #62665f; font-size: 13px; line-height: 1.7;">尚未采样，页面不写数字</p>
           </article>
         </div>

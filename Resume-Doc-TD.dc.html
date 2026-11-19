@@ -76,7 +76,7 @@
       <p style="margin: 1.5mm 0 0; font-size: 10pt; font-weight: 700; color: #40443e;">个人项目 · UE 5.7 → 5.8 · 无引擎源码改动</p>
       <ul style="margin: 2.5mm 0 0; padding-left: 5mm; font-size: 10pt; line-height: 1.5; display: grid; gap: 1mm;">
         <li>31 套材质函数组成 PBR / NPR 复用库，第二形态只建材质实例、未新增 master。</li>
-        <li>C++ 运行时把画质参数抽成 Data Asset，美术调分档不用开材质图，未配置档位时回退到项目默认值。</li>
+        <li>C++ 运行时把画质参数抽成 Data Asset，美术调分档不用开材质图，缺省走项目默认值。</li>
         <li>RenderDoc 定位渲染线程瓶颈，改软件光追后帧时间 −13.2%；内描边迁入 RDG 自定义 Pass 实测持平，保留原实现。</li>
       </ul>
     </section>

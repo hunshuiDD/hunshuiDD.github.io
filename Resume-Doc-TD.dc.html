@@ -64,7 +64,7 @@
       <p style="margin: 1.5mm 0 0; font-size: 10pt; font-weight: 700; color: #40443e;">个人项目 · 开源 · github.com/hunshuiDD/ai-dcc-ue5-pipeline</p>
       <ul style="margin: 2.5mm 0 0; padding-left: 5mm; font-size: 10pt; line-height: 1.5; display: grid; gap: 1mm;">
         <li><strong>痛点：</strong>资产交接靠人工目检，命名、Transform、UV、材质槽问题反复出现，是流程缺陷而非个人疏忽。</li>
-        <li><strong>方案：</strong>13 条确定性规则，Blender 导出前、UE 导入后各拦一道；规则写成 JSON，按 PC / 移动端切换阈值。</li>
+        <li><strong>方案：</strong>13 条确定性规则，Blender 导出前拦截、UE 导入后复检；规则写成 JSON，按 PC / 移动端切换阈值。</li>
         <li><strong>交付：</strong>UE 5.8 C++ 规则库与资源审查插件（已人工验收）、双语手册、一键安装 ZIP、640 项离线测试（628 通过、12 跳过）。</li>
         <li><strong>边界：</strong>MCP 管线写入需授权、关卡需人工签字；AI 只解释报告、不改资产。</li>
       </ul>

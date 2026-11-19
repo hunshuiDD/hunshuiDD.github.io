@@ -125,7 +125,7 @@ html.lly-scroll .hero{position:sticky;top:0}
     </svg>
     <div class="hero-tag t1">
       <small>SHADING MODEL</small>
-      <strong>Stylized Lit · NPR 全在 Emissive 自算</strong>
+      <strong>脸 Unlit · 身体 Lit · NPR 在 Emissive 自算</strong>
     </div>
     <div class="hero-tag t2">
       <small>FRAME TIME @1080P</small>
@@ -192,7 +192,7 @@ html.lly-scroll .hero{position:sticky;top:0}
           </div>
         </div>
         <div>
-          <p class="case-desc" data-reveal="">二次元渲染最难的不是「像」，而是「稳」：转头时脸部阴影不能跳变，主光、局部光、环境光同时存在时画面不能打架。这套系统用 31 个材质函数组成复用库，配一层 C++ 数据驱动运行时做逐帧光照仲裁和三档自阴影，再加引擎层 RDG 自定义 Pass 和一套调试视图——目标只有一个：效果可解释，问题可归因。</p>
+          <p class="case-desc" data-reveal="">二次元渲染最难的不是「像」，而是「稳」：转头时脸部阴影不能跳变，主光、局部光、环境光同时存在时画面不能打架。这套系统用 31 个材质函数组成复用库，配一层 C++ 数据驱动运行时做逐帧光照仲裁和两套自阴影通路，再加引擎层 RDG 自定义 Pass 和一套调试视图——目标只有一个：效果可解释，问题可归因。</p>
           <figure class="case-figure" data-reveal="" style="--rd:.08s; margin-top: 26px;">
             <div class="frame"><img src="assets/2d745e0cb27ec2a6d04520173c447005.jpg" alt="Face SDF 脸部渲染特写" loading="lazy"></div>
             <figcaption><span>Face SDF：任意光向下，脸部阴影分区保持二次元观感</span><span class="mono">FACE SDF</span></figcaption>
@@ -309,7 +309,7 @@ html.lly-scroll .hero{position:sticky;top:0}
           </div>
           <ul class="ledger" data-reveal="" style="--rd:.16s">
             <li><span class="lv ok">实测</span><b>鼻口保住了</b><code>保护区 97,116 个像素，三档改动均为 0</code></li>
-            <li><span class="lv">UE 验证</span><b>主光方向与选灯一致</b><code>9 组静态光向回读一致，双灯切换 1/1</code></li>
+            <li><span class="lv">UE 验证</span><b>主光方向与选灯一致</b><code>9 组静态配置（六光向＋三档擦除）回读一致，双灯切换 1/1</code></li>
           </ul>
         </div>
         <div>
@@ -317,7 +317,7 @@ html.lly-scroll .hero{position:sticky;top:0}
           <figure class="case-figure" data-reveal="" style="margin: 0">
             <div class="frame"><img src="assets/cdd60eb2a7f25ce2ca2a7b0fbc764883.png" alt="UE 5.8.3 面部 SDF 六光向" style="object-fit: contain"></div>
           </figure>
-          <p class="case-desc" data-reveal="">角色时域稳定也做了对照：静态头模、移动相机、3° 默认软边。关闭引擎 AA 时，眼鼻嘴区域误差闪烁下降 10.53%；TSR 下上升 5.64%，仍未达标。</p>
+          <p class="case-desc" data-reveal="">角色时域稳定也做了对照：静态头模、移动相机、3° 默认软边。关闭引擎 AA 时，眼鼻嘴区域误差闪烁下降 10.53%；TSR 下上升 5.64%，改为按抗锯齿方式自动关闭加宽后与基线持平（32/32 帧同哈希）。</p>
           <a class="case-link" href="Work-SDF.dc.html#temporal" data-reveal="">看角色时域稳定 <span>→</span></a>
         </div>
       </div>
@@ -354,8 +354,8 @@ html.lly-scroll .hero{position:sticky;top:0}
       </div>
       <div class="story-item" data-reveal="">
         <span class="step">STEP 04 · 修复</span>
-        <h3>一行 cvar，视觉无损</h3>
-        <p>切换 BVH 重建策略后，GI 完整保留，画面逐像素对比无差异。修复方案被写回材质系统的参数面板，可一键开关验证。</p>
+        <h3>一行 cvar，GI 完整保留</h3>
+        <p>Lumen 硬件光追改为软件追踪后，GI 完整保留，代价是反射精度下降。修复方案被写回材质系统的参数面板，可一键开关验证。</p>
       </div>
     </div>
 

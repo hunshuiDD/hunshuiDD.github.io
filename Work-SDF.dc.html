@@ -121,7 +121,7 @@ html body [data-reveal]{opacity:1;transform:none;transition:none}
     <div class="sec-head">
       <div>
         <span class="no" data-reveal="">01 · 烘焙与局部清理</span>
-        <h2 data-reveal="">清理耳内和颈根，<br>先保住鼻口。</h2>
+        <h2 data-reveal="">只清颈根，<br>耳内与鼻口保原样。</h2>
       </div>
     </div>
     <ul class="lly-cando" style="margin-bottom: 48px">
@@ -153,7 +153,7 @@ html body [data-reveal]{opacity:1;transform:none;transition:none}
     <ul class="lly-cando">
       <li data-reveal=""><span>01</span><b>六光向复验</b><em>UE 5.8.3 DX12 / SM6 实拍六个光向。屏幕擦除在 20% / 50% / 80% 对照硬明暗与 SDF；UMG 擦除控件实机视口记录 20% / 80%。</em></li>
       <li data-reveal=""><span>02</span><b>GPU 回读与源图一致</b><em>8 个 GPU 样点相对源 PNG 的最大归一化 RGB 误差为 0.0000073911。</em></li>
-      <li data-reveal=""><span>03</span><b>主光选择 F-3</b><em>双灯切换自动化 1/1。六光向与三档擦除共 9 组静态方向，选灯、方向与写入材质的回读逐组一致。</em></li>
+      <li data-reveal=""><span>03</span><b>主光选择 F-3</b><em>双灯切换自动化 1/1。六光向与三档擦除共 9 组静态配置，选灯、方向与写入材质的回读逐组一致。</em></li>
     </ul>
     <div style="display: flex; flex-direction: column; gap: 40px; margin-top: 48px">
       <figure class="lly-slot-fig" data-reveal="">
@@ -183,11 +183,11 @@ html body [data-reveal]{opacity:1;transform:none;transition:none}
     <div class="sec-head">
       <div>
         <span class="no" data-reveal="">03 · 角色时域稳定</span>
-        <h2 data-reveal="">关闭 AA 有改善，<br>TSR 组合仍未达标。</h2>
+        <h2 data-reveal="">关闭 AA 有改善，<br>TSR 下退回基线。</h2>
       </div>
     </div>
     <ul class="lly-cando" style="margin-bottom: 48px">
-      <li data-reveal=""><span>01</span><b>同轨看眼、鼻、嘴</b><em>CC0 静态头模、移动相机，连续 32 帧对比 4 倍边长参考。3° 默认软边下，解析式步进宽度使眼鼻嘴区域误差闪烁在关闭引擎 AA 时下降 10.53%，TSR 下上升 5.64%。</em></li>
+      <li data-reveal=""><span>01</span><b>同轨看眼、鼻、嘴</b><em>CC0 静态头模、移动相机，连续 32 帧对比 4 倍边长参考。3° 默认软边下，解析式步进宽度使眼鼻嘴区域误差闪烁在关闭引擎 AA 时下降 10.53%，TSR 下上升 5.64%；改为按 r.AntiAliasingMethod 自动关闭额外加宽后与基线 32/32 帧同哈希，整帧 GPU 差 +0.15%，低于 2% 判定线。</em></li>
       <li data-reveal=""><span>02</span><b>硬边夹具也测一遍</b><em>关闭引擎 AA，误差从 0.019750 降到 0.006695（−66.10%）。</em></li>
       <li data-reveal=""><span>03</span><b>三条描边路径实拍</b><em>反面壳、TSR 前模板、TSR 后模板各采 32 帧真实视口。动态参数切换的整帧 GPU 差异未越过 2% 判定线。</em></li>
     </ul>

@@ -12,6 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&family=Geist+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
 <style>
+/* 未进入视口的滑入动效起始帧（translateX）会撑出横向滚动条，横向裁掉 */
+html, body { overflow-x: clip; }
   body { margin: 0; background: #e9e9e2; }
   a { color: #121310; text-decoration: none; }
   a:hover { color: #f06432; }
@@ -23,7 +25,7 @@
   @media (max-width: 700px) {
     [data-header="status"] { display: none !important; }
     [data-grid="actions"] { display: grid !important; width: 100%; }
-    [data-grid="actions"] > a { width: 100%; }
+    [data-grid="actions"] > a { width: 100%; box-sizing: border-box; }
     footer { flex-direction: column; align-items: flex-start !important; }
   }
 </style>
@@ -53,13 +55,13 @@
     </div>
   </header>
 
-  <main data-screen-label="404" style="flex: 1; display: grid; align-content: center; justify-items: start; width: 100%; max-width: 1000px; margin: 0 auto; padding: 80px clamp(20px, 4vw, 56px); background-image: linear-gradient(to right, rgba(18,19,16,.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(18,19,16,.05) 1px, transparent 1px); background-size: 8.333% 100%, 100% 90px;">
+  <main data-screen-label="404" style="flex: 1; display: grid; align-content: center; justify-items: start; width: 100%; max-width: calc(1000px + 2 * clamp(20px, 4vw, 56px)); box-sizing: border-box; margin: 0 auto; padding: 80px clamp(20px, 4vw, 56px); background-image: linear-gradient(to right, rgba(18,19,16,.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(18,19,16,.05) 1px, transparent 1px); background-size: 8.333% 100%, 100% 90px;">
     <span style="color: #62665f; font: 700 12px 'Geist Mono', monospace; letter-spacing: .16em;">ERROR / 404</span>
     <h1 style="margin: 18px 0 12px; font-family: 'Noto Sans SC', Geist, sans-serif; font-size: clamp(52px, 8vw, 112px); font-weight: 900; line-height: .95; letter-spacing: -.05em;">这一页<br />没有可核验的内容</h1>
-    <p style="max-width: 620px; margin: 0; color: #40443e; font-size: 17px; line-height: 1.85;">页面可能已经改名，或者它对应的项目还没有达到公开证据门槛。可以从项目索引重新进入。</p>
+    <p style="max-width: 620px; margin: 0; color: #40443e; font-size: 17px; line-height: 1.85;">页面可能已经改名，或者它对应的项目还没有达到公开证据门槛。可以从项目列表重新进入。</p>
     <div data-grid="actions" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px;">
       <a href="Main.dc.html" style="min-width: 200px; min-height: 52px; display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 20px; background: #f06432; color: #121310; font: 700 12px 'Geist Mono', monospace; letter-spacing: .04em;">返回首页 <b>→</b></a>
-      <a href="Project-Index.dc.html" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 20px; border: 1px solid #121310; font: 700 12px 'Geist Mono', monospace; letter-spacing: .04em;">查看项目索引</a>
+      <a href="Projects.dc.html" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 20px; border: 1px solid #121310; font: 700 12px 'Geist Mono', monospace; letter-spacing: .04em;">查看项目列表</a>
       <a href="Resume.dc.html" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 20px; border-bottom: 1px solid #121310; font: 700 12px 'Geist Mono', monospace; letter-spacing: .04em; color: #40443e;">查看简历</a>
     </div>
   </main>

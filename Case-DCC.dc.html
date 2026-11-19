@@ -12,6 +12,8 @@
 <helmet>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&amp;family=Noto+Serif+SC:wght@400;600;900&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
 <style>
+/* 未进入视口的滑入动效起始帧（translateX）会撑出横向滚动条，横向裁掉 */
+html, body { overflow-x: clip; }
 body{margin:0}
 html body [data-reveal]{opacity:1;transform:none;transition:none}
 .btn .arr,.case-link span,.cap-item .go,.proj-row .go{display:inline-block;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}

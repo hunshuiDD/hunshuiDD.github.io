@@ -12,6 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&amp;family=Geist+Mono:wght@400;500;700&amp;family=Noto+Sans+SC:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
 <style>
+/* 未进入视口的滑入动效起始帧（translateX）会撑出横向滚动条，横向裁掉 */
+html, body { overflow-x: clip; }
   body { margin: 0; background: #f4f2eb; }
   a { color: #121310; text-decoration: none; }
   a:hover { color: #f06432; }

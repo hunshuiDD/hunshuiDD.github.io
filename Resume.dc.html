@@ -12,6 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800;900&amp;family=Geist+Mono:wght@400;500;700&amp;family=Noto+Sans+SC:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
 <style>
+/* 未进入视口的滑入动效起始帧（translateX）会撑出横向滚动条，横向裁掉 */
+html, body { overflow-x: clip; }
   body { margin: 0; background: #e9e9e2; }
   a { color: #121310; text-decoration: none; }
   a:hover { color: #f06432; }
@@ -36,6 +38,7 @@
   @media (max-width: 700px) {
     [data-grid="resume-header"] { grid-template-columns: 1fr !important; gap: 24px !important; }
     [data-grid="facts"], [data-grid="skills"] { grid-template-columns: 1fr !important; }
+    [data-grid="actions"] { flex-direction: column; }
     [data-header="status"] { display: none !important; }
     footer { flex-direction: column; align-items: flex-start !important; }
   }
@@ -180,7 +183,7 @@
           </div>
           <time style="color: #40443e; font: 700 11px 'Geist Mono', monospace; white-space: nowrap;">2026.11 — 至今</time>
         </header>
-        <p style="margin: 14px 0 0; line-height: 1.75;">个人项目 · UE 5.8.3 · CC0 公开头模 · 个人重写版。</p>
+        <p style="margin: 14px 0 0; line-height: 1.75;">个人项目 · 开源 · UE 5.8.3 · CC0 公开头模 · 个人重写版。</p>
         <ul style="margin: 12px 0 0; padding-left: 20px; line-height: 1.75;">
           <li>多光向 Cycles 可见性烘焙 35 次生成面部 SDF；局部去碎只清颈根碎块，鼻口保护区与耳内阴影改动为 0。</li>
           <li>UE 5.8.3 材质层按主光方向读 SDF：六光向与三档分屏擦除对照，8 点 GPU 抽查相对源贴图最大归一化 RGB 误差 7.4×10⁻⁶；9 组静态光向下自动选主光与材质回读逐组一致。</li>
@@ -249,6 +252,7 @@
       <div style="grid-column: 2;">
         <p style="margin: 0;"><a href="https://www.bilibili.com/video/BV1yp3x6kEuH/" target="_blank" rel="noreferrer" style="border-bottom: 1px solid #121310;">Bilibili Demo · BV1yp3x6kEuH ↗</a></p>
         <p style="margin: 14px 0 0;"><a href="https://github.com/hunshuiDD/ai-dcc-ue5-pipeline" target="_blank" rel="noreferrer" style="border-bottom: 1px solid #121310;">GitHub · hunshuiDD/ai-dcc-ue5-pipeline ↗</a></p>
+        <p style="margin: 14px 0 0;"><a href="https://github.com/hunshuiDD/face-sdf-lab" target="_blank" rel="noreferrer" style="border-bottom: 1px solid #121310;">GitHub · hunshuiDD/face-sdf-lab ↗</a></p>
         <p style="margin: 14px 0 0;"><a href="https://hunshuiDD.github.io" target="_blank" rel="noreferrer" style="border-bottom: 1px solid #121310;">作品集网页 · 案例页与证据清单 ↗</a></p>
         
       </div>

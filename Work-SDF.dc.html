@@ -12,6 +12,8 @@
 <helmet>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&amp;family=Noto+Serif+SC:wght@400;600;900&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
 <style>
+/* 未进入视口的滑入动效起始帧（translateX）会撑出横向滚动条，横向裁掉 */
+html, body { overflow-x: clip; }
 body{margin:0}
 html body [data-reveal]{opacity:1;transform:none;transition:none}
 .btn .arr,.case-link span,.cap-item .go,.proj-row .go{display:inline-block;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
@@ -108,6 +110,7 @@ html body [data-reveal]{opacity:1;transform:none;transition:none}
       <div class="row"><span>角色</span><span>独立完成烘焙、材质接入与实测</span></div>
       <div class="row"><span>引擎</span><span>Unreal Engine 5.8.3 · DX12 / SM6</span></div>
       <div class="row"><span>技术栈</span><span>Blender Cycles · CC0 公开头模 GEO-head_stylized · UE 材质 / UMG</span></div>
+      <div class="row"><span>仓库</span><span><a href="https://github.com/hunshuiDD/face-sdf-lab" style="color: var(--clay-ink)">hunshuiDD/face-sdf-lab ↗</a></span></div>
     </div>
   </div>
 </section>
@@ -209,7 +212,8 @@ html body [data-reveal]{opacity:1;transform:none;transition:none}
 <section class="cap">
   <div class="wrap">
     <div style="display: flex; flex-wrap: wrap; gap: 14px" data-reveal="">
-      <a class="btn btn-primary" href="Main.dc.html#case-sdf">回到首页 <span class="arr">→</span></a>
+      <a class="btn btn-primary" href="https://github.com/hunshuiDD/face-sdf-lab">看 GitHub 仓库 <span class="arr">↗</span></a>
+      <a class="btn btn-ghost" href="Main.dc.html#case-sdf">回到首页 <span class="arr">→</span></a>
       <a class="btn btn-ghost" href="Projects.dc.html">看其他项目 <span class="arr">→</span></a>
     </div>
   </div>

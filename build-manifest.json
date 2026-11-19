@@ -10,7 +10,7 @@
     "Resume.dc.html",
     "Work-SDF.dc.html"
   ],
-  "assets": 55,
+  "assets": 56,
   "runtime": "current",
   "runtime_source_sha256": "c4929939a4fa0ff409afd395a75cd87a7a7412d26bf4cf34d7292a94c05ea482",
   "runtime_url_replacements": {

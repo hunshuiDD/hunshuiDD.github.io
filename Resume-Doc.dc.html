@@ -37,8 +37,9 @@
       <div style="display: grid; gap: 1.6mm; text-align: right; font: 500 10pt 'Geist Mono', monospace; color: #40443e;">
         <span>18107714647</span>
         <span>2357312074@qq.com</span>
-        <span style="font-family: Noto Sans SC">男 · 籍贯 广西 / 南宁</span>
+        <span style="font-family: Noto Sans SC">男</span>
         <span>github.com/hunshuiDD</span>
+        <span>hunshuiDD.github.io</span>
       </div>
     </header>
 
@@ -56,7 +57,7 @@
         <li>独立负责方案设计、UE 5.8 引擎源码改造与测试数据采集；公司角色仅作测试样本，按原项目问题迭代。</li>
         <li>目标：不加角色补光，让写实脸部阴影干净、可由美术控制，同时保留立体感和皮肤散射。</li>
         <li>UE 5.8.3 源码版延迟管线新增着色模型，SDF 只替换主光漫反射；主光打分仲裁，所有效果滑杆归 0 即原生。</li>
-        <li>阴影按投射者身份拆分：外部投影全保留，自阴影按美术遮罩保留；自阴影可去除约 99%，颈部保留 92–100%，开销在噪声内。</li>
+        <li>阴影按投射者身份拆分：外部投影误删由按距离判别时的约 40% 降到 1% 以内，自阴影按美术遮罩可去除约 99%，颈部保留 92–100%，额外开销 ≤0.11 ms（均为 JX3 实习项目测试）。</li>
       </ul>
     </section>
 
